@@ -1,8 +1,8 @@
 package com.example.cocktailworld.data.api
 
-import com.example.cocktailworld.model.Drink
+import com.example.cocktailworld.model.Drinks
 import retrofit2.Response
 
 interface ApiHelper {
-	suspend fun getPopularCockTails(): Response<List<Drink>>
+	suspend fun getPopularCockTails(): Response<Drinks>
 }

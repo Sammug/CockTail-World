@@ -1,12 +1,14 @@
 package com.example.cocktailworld.data.api
 
-import com.example.cocktailworld.model.Drink
+import com.example.cocktailworld.model.Drinks
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ApiHelperImpl @Inject constructor(
 	private val apiService: ApiService
 ): ApiHelper{
-	override suspend fun getPopularCockTails(): Response<List<Drink>> = apiService.getPopularCockTails()
+	override suspend fun getPopularCockTails(): Response<Drinks> = apiService.getPopularCockTails()
 
 }

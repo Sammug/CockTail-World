@@ -1,10 +1,11 @@
 package com.example.cocktailworld.data.api
 
-import com.example.cocktailworld.model.Drink
+import com.example.cocktailworld.model.Drinks
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface ApiService {
-	@GET("latest")
-	suspend fun getPopularCockTails(): Response<List<Drink>>
+
+	@GET("popular.php")
+	suspend fun getPopularCockTails(): Response<Drinks>
 }

@@ -1,7 +1,9 @@
 package com.example.cocktailworld.model
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Drink(
 	val idDrink: String,
 	val strDrink: String,
@@ -11,4 +13,4 @@ data class Drink(
 	val strGlass: String?,
 	val strInstructions: String?,
 	val strDrinkThumb: String
-): Serializable
+): Parcelable
