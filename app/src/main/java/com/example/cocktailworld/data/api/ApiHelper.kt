@@ -5,4 +5,6 @@ import retrofit2.Response
 
 interface ApiHelper {
 	suspend fun getPopularCockTails(): Response<Drinks>
+	suspend fun getMostLatestCockTails(): Response<Drinks>
+
 }

@@ -22,6 +22,7 @@ class MainViewModel @Inject constructor(
 
 	init {
 		fetchPopularDrinks()
+		fetchMostLatestDrinks()
 	}
 
 	 fun fetchPopularDrinks(){
@@ -31,6 +32,15 @@ class MainViewModel @Inject constructor(
 			_drinks.postValue(handleDrinksResponse(response))
 		}
 	}
+
+	fun fetchMostLatestDrinks(){
+		viewModelScope.launch {
+			_drinks.postValue(Resource.loading(null))
+			val response = mainRepository.getMostLatestCockTails()
+			_drinks.postValue(handleDrinksResponse(response))
+		}
+	}
+
 	private fun handleDrinksResponse(response: Response<Drinks>): Resource<Drinks>{
 		if (response.isSuccessful){
 			response.body()?.let {drinks ->

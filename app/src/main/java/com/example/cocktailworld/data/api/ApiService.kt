@@ -8,4 +8,7 @@ interface ApiService {
 
 	@GET("popular.php")
 	suspend fun getPopularCockTails(): Response<Drinks>
+
+	@GET("latest.php")
+	suspend fun getMostLatestCockTails(): Response<Drinks>
 }

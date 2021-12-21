@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
 import com.example.cocktailworld.model.Drink
-import com.example.cocktailworld.model.Drinks
 
-class DrinksAdapter: RecyclerView.Adapter<DrinksAdapter.ViewHolder>() {
+class PopularDrinksAdapter: RecyclerView.Adapter<PopularDrinksAdapter.ViewHolder>() {
 
 	class ViewHolder(
 		itemView: View

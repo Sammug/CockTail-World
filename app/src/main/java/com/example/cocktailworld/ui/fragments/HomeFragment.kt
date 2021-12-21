@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cocktailworld.adapters.DrinksAdapter
+import com.example.cocktailworld.adapters.LatestDrinksAdapter
+import com.example.cocktailworld.adapters.PopularDrinksAdapter
 import com.example.cocktailworld.databinding.FragmentHomeBinding
 import com.example.cocktailworld.ui.viewmodels.MainViewModel
 import com.example.cocktailworld.utils.Status
@@ -20,7 +22,8 @@ class HomeFragment : Fragment() {
 	val binding: FragmentHomeBinding
 	get() = _binding!!
 
-	private lateinit var adapter: DrinksAdapter
+	private lateinit var adapterPopular: PopularDrinksAdapter
+	private lateinit var adapterLatest: LatestDrinksAdapter
 	private val mainViewModel: MainViewModel by viewModels()
 
 	override fun onCreateView(
@@ -35,14 +38,18 @@ class HomeFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		adapter = DrinksAdapter()
-		setRecyclerview()
+		adapterPopular = PopularDrinksAdapter()
+		adapterLatest = LatestDrinksAdapter()
+		setPopularDrinksRecyclerview()
+		setLatestDrinksRecyclerview()
 
 		mainViewModel.drinks.observe(viewLifecycleOwner, {
 			when(it.status){
 				is Status.SUCCESS -> {
-					it.data?.let {
-						drinks -> adapter.differ.submitList(drinks.drinks)
+					it.data?.let { drinks ->
+						adapterPopular.differ.submitList(drinks.drinks)
+						adapterLatest.differ.submitList(drinks.drinks)
+
 					}
 				}
 				is Status.ERROR -> {
@@ -55,10 +62,17 @@ class HomeFragment : Fragment() {
 		})
 	}
 
-	private fun setRecyclerview() {
-		val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
+	private fun setLatestDrinksRecyclerview() {
+		val layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL,true)
+		binding.recyclerViewLatestDrinks.layoutManager = layoutManager
+		binding.recyclerViewLatestDrinks.hasFixedSize()
+		binding.recyclerViewLatestDrinks.adapter  = adapterLatest
+	}
+
+	private fun setPopularDrinksRecyclerview() {
+		val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,true)
 		binding.recyclerViewPopularDrink.layoutManager = layoutManager
 		binding.recyclerViewPopularDrink.hasFixedSize()
-		binding.recyclerViewPopularDrink.adapter  = adapter
+		binding.recyclerViewPopularDrink.adapter  = adapterPopular
 	}
 }
