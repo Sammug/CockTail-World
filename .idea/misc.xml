@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/font/font.xml" value="0.1881578947368421" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16271929824561404" />
+        <entry key="app/src/main/res/layout/fragment_drink_details.xml" value="0.14956140350877192" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/latest_drink_item_layout.xml" value="0.16271929824561404" />
         <entry key="app/src/main/res/layout/popular_drink_item_layout.xml" value="0.22" />

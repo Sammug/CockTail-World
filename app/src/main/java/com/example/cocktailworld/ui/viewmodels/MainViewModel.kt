@@ -6,33 +6,37 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktailworld.data.repositories.MainRepository
 import com.example.cocktailworld.model.Drinks
-import com.example.cocktailworld.utils.ResourceStatus
+import com.example.cocktailworld.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
 	private val mainRepository: MainRepository
 ): ViewModel(){
-	private val _drinks = MutableLiveData<ResourceStatus<Drinks>>()
-	val drinks: LiveData<ResourceStatus<Drinks>>
+	private val _drinks = MutableLiveData<Resource<Drinks>>()
+	val drinks: LiveData<Resource<Drinks>>
 	get() = _drinks
 
 	init {
 		fetchPopularDrinks()
 	}
 
-	private fun fetchPopularDrinks(){
+	 fun fetchPopularDrinks(){
 		viewModelScope.launch {
-			_drinks.postValue(ResourceStatus.loading(null))
-			mainRepository.getPopularCockTails().let {
-				if (it.isSuccessful){
-					_drinks.postValue(ResourceStatus.success(it.body()))
-				}else{
-					_drinks.postValue(ResourceStatus.error(it.errorBody().toString(),null))
-				}
+			_drinks.postValue(Resource.loading(null))
+			val response = mainRepository.getPopularCockTails()
+			_drinks.postValue(handleDrinksResponse(response))
+		}
+	}
+	private fun handleDrinksResponse(response: Response<Drinks>): Resource<Drinks>{
+		if (response.isSuccessful){
+			response.body()?.let {drinks ->
+				return Resource.success(drinks)
 			}
 		}
+		return Resource.error(response.message(),null)
 	}
 }

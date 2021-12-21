@@ -5,14 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
+import com.example.cocktailworld.model.Drink
 import com.example.cocktailworld.model.Drinks
 
-class PopularDrinksAdapter(
-	private val popularDrinks: ArrayList<Drinks>
-): RecyclerView.Adapter<PopularDrinksAdapter.ViewHolder>() {
+class DrinksAdapter: RecyclerView.Adapter<DrinksAdapter.ViewHolder>() {
 
 	class ViewHolder(
 		itemView: View
@@ -27,27 +28,37 @@ class PopularDrinksAdapter(
 		}
 	}
 
+	private val differCallBack = object : DiffUtil.ItemCallback<Drink>(){
+		override fun areItemsTheSame(oldItem: Drink, newItem: Drink): Boolean {
+			return oldItem.idDrink == newItem.idDrink
+
+		}
+
+		override fun areContentsTheSame(oldItem: Drink, newItem: Drink): Boolean {
+			return oldItem == newItem
+		}
+	}
+	val differ = AsyncListDiffer(this,differCallBack)
+
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-		LayoutInflater.from(parent.context).inflate(R.layout.popular_drink_item_layout,parent,false)
+		LayoutInflater
+			.from(parent.context)
+			.inflate(R.layout.popular_drink_item_layout,parent,false)
 	)
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		val drinks: Drinks = popularDrinks[position]
-		holder.textViewName.text = drinks.drinks[position].strDrink
-		holder.textViewCategory.text = drinks.drinks[position].strCategory
+		val drink = differ.currentList[position]
+		holder.textViewName.text = drink.strDrink
+		holder.textViewCategory.text = drink.strCategory
 
 		Glide.with(holder.itemView.context)
-			.load(drinks.drinks[position].strDrinkThumb)
+			.load(drink.strDrinkThumb)
 			.error(R.drawable.cock_tail_thumbnail)
 			.into(holder.imageViewDrink)
 
 	}
 
 	override fun getItemCount(): Int {
-		return popularDrinks.size
-	}
-
-	fun addDrinks(drinks: Drinks){
-		popularDrinks.addAll(listOf(drinks))
+		return differ.currentList.size
 	}
 }
