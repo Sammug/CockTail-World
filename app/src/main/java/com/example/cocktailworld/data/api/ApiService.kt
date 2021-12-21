@@ -11,4 +11,7 @@ interface ApiService {
 
 	@GET("latest.php")
 	suspend fun getMostLatestCockTails(): Response<Drinks>
+
+	@GET("randomselection.php")
+	suspend fun geRandomTopDrinks(): Response<Drinks>
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cocktailworld.adapters.LatestDrinksAdapter
 import com.example.cocktailworld.adapters.PopularDrinksAdapter
+import com.example.cocktailworld.adapters.TopTenRandomDrinksAdapter
 import com.example.cocktailworld.databinding.FragmentHomeBinding
 import com.example.cocktailworld.ui.viewmodels.MainViewModel
 import com.example.cocktailworld.utils.Status
@@ -24,6 +25,7 @@ class HomeFragment : Fragment() {
 
 	private lateinit var adapterPopular: PopularDrinksAdapter
 	private lateinit var adapterLatest: LatestDrinksAdapter
+	private lateinit var adapterTopTenDrinks: TopTenRandomDrinksAdapter
 	private val mainViewModel: MainViewModel by viewModels()
 
 	override fun onCreateView(
@@ -40,15 +42,19 @@ class HomeFragment : Fragment() {
 
 		adapterPopular = PopularDrinksAdapter()
 		adapterLatest = LatestDrinksAdapter()
+		adapterTopTenDrinks = TopTenRandomDrinksAdapter()
+
 		setPopularDrinksRecyclerview()
 		setLatestDrinksRecyclerview()
+		setTopDrinksRecyclerView()
 
 		mainViewModel.drinks.observe(viewLifecycleOwner, {
 			when(it.status){
 				is Status.SUCCESS -> {
 					it.data?.let { drinks ->
-						adapterPopular.differ.submitList(drinks.drinks)
+						adapterPopular.differ.submitList(drinks.drinks.subList(0,5))
 						adapterLatest.differ.submitList(drinks.drinks)
+						adapterTopTenDrinks.differ.submitList(drinks.drinks)
 
 					}
 				}
@@ -60,6 +66,13 @@ class HomeFragment : Fragment() {
 				}
 			}
 		})
+	}
+
+	private fun setTopDrinksRecyclerView() {
+		val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,true)
+		binding.recyclerViewTopTenDrinks.layoutManager = layoutManager
+		binding.recyclerViewTopTenDrinks.hasFixedSize()
+		binding.recyclerViewTopTenDrinks.adapter  = adapterTopTenDrinks
 	}
 
 	private fun setLatestDrinksRecyclerview() {

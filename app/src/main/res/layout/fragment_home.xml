@@ -8,81 +8,87 @@
     android:background="@color/primaryColor"
     tools:context=".ui.fragments.HomeFragment" >
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/rota_bold"
-        android:text="@string/latest"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView_latest_drinks" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        app:cardBackgroundColor="@color/primaryLightColor"
-        app:cardCornerRadius="20dp"
-        app:cardMaxElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/primaryDarkColor">
-
-        <SearchView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/most_popular"
-        android:textColor="@color/primaryTextColor"
-        android:fontFamily="@font/rota_bold"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/rota_bold"
-        android:text="@string/latest"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView_popular_drink" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/rota_bold"
+                    android:text="@string/latest"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView_latest_drinks" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_popular_drink"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_top_ten_drinks"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_latest_drinks"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/rota_bold"
+                    android:text="@string/most_popular"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView_top_ten_drinks" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/rota_bold"
+                    android:text="@string/latest"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView_popular_drink" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_popular_drink"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_latest_drinks"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

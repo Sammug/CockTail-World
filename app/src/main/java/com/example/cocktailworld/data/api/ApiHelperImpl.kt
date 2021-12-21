@@ -11,5 +11,6 @@ class ApiHelperImpl @Inject constructor(
 ): ApiHelper{
 	override suspend fun getPopularCockTails(): Response<Drinks> = apiService.getPopularCockTails()
 	override suspend fun getMostLatestCockTails(): Response<Drinks> = apiService.getMostLatestCockTails()
+	override suspend fun getRandomTopCockTails(): Response<Drinks> = apiService.geRandomTopDrinks()
 
 }

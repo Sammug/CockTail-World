@@ -23,6 +23,7 @@ class MainViewModel @Inject constructor(
 	init {
 		fetchPopularDrinks()
 		fetchMostLatestDrinks()
+		fetchRandomTopDrinks()
 	}
 
 	 fun fetchPopularDrinks(){
@@ -37,6 +38,14 @@ class MainViewModel @Inject constructor(
 		viewModelScope.launch {
 			_drinks.postValue(Resource.loading(null))
 			val response = mainRepository.getMostLatestCockTails()
+			_drinks.postValue(handleDrinksResponse(response))
+		}
+	}
+
+	fun fetchRandomTopDrinks(){
+		viewModelScope.launch {
+			_drinks.postValue(Resource.loading(null))
+			val response = mainRepository.getRandomTopCockTails()
 			_drinks.postValue(handleDrinksResponse(response))
 		}
 	}

@@ -10,5 +10,6 @@ import javax.inject.Singleton
 class MainRepository @Inject constructor(private val apiService: ApiService) {
 	suspend fun getPopularCockTails() = apiService.getPopularCockTails()
 	suspend fun getMostLatestCockTails() = apiService.getMostLatestCockTails()
+	suspend fun getRandomTopCockTails() = apiService.geRandomTopDrinks()
 
 }

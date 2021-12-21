@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFragment2"
+        android:enabled="true"
+        android:icon="@drawable/icon_home_filled"
+        android:title="Home"
+        android:visible="true"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/searchDrinksFragment"
+        android:icon="@drawable/icon_search_filled"
+        android:title="Search"
+        />
+    <item
+        android:id="@+id/createRecipeFragment"
+        android:icon="@drawable/icon_glass_filled"
+        android:title="Recipe"
+        />
+    <item
+        android:id="@+id/favouritesFragment"
+        android:icon="@drawable/ic_like"
+        android:title="Favourite"
+        />
+</menu>
