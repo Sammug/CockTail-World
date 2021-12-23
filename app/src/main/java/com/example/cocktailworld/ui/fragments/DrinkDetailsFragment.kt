@@ -5,28 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
+import com.example.cocktailworld.databinding.FragmentDrinkDetailsBinding
+import com.example.cocktailworld.model.Drink
+import com.example.cocktailworld.model.Drinks
+import com.example.cocktailworld.ui.viewmodels.MainViewModel
+import com.example.cocktailworld.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
+import java.security.acl.Owner
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DrinkDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class DrinkDetailsFragment : Fragment() {
-	// TODO: Rename and change types of parameters
-	private var param1: String? = null
-	private var param2: String? = null
+	private var _binding: FragmentDrinkDetailsBinding? = null
+	val binding: FragmentDrinkDetailsBinding
+	get() = _binding!!
+
+	private val mainViewModel:MainViewModel by viewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		arguments?.let {
-			param1 = it.getString(ARG_PARAM1)
-			param2 = it.getString(ARG_PARAM2)
+
 		}
 	}
 
@@ -34,27 +37,51 @@ class DrinkDetailsFragment : Fragment() {
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_drink_details, container, false)
+		_binding = FragmentDrinkDetailsBinding.inflate(inflater,container,false)
+		return binding.root
 	}
 
-	companion object {
-		/**
-		 * Use this factory method to create a new instance of
-		 * this fragment using the provided parameters.
-		 *
-		 * @param param1 Parameter 1.
-		 * @param param2 Parameter 2.
-		 * @return A new instance of fragment DrinkDetailsFragment.
-		 */
-		// TODO: Rename and change types and number of parameters
-		@JvmStatic
-		fun newInstance(param1: String, param2: String) =
-			DrinkDetailsFragment().apply {
-				arguments = Bundle().apply {
-					putString(ARG_PARAM1, param1)
-					putString(ARG_PARAM2, param2)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		val drinkId: String? = arguments?.getString("ID")
+
+		drinkId?.let {
+			mainViewModel.fetchDrinkDetails(it)
+			mainViewModel.drink.observe(viewLifecycleOwner, { drinks ->
+				when(drinks.status){
+					is Status.SUCCESS -> {
+						drinks.data?.drinks.let { drink ->
+							drink?.map { _drink -> bindViews(_drink)
+							}
+						}
+					}
+					is Status.ERROR -> {
+						Toast.makeText(requireContext(),"Error occured", Toast.LENGTH_LONG).show()
+					}
+					is Status.LOADING -> {
+						Toast.makeText(requireContext(),"LOADING..", Toast.LENGTH_LONG).show()
+					}
 				}
-			}
+			})
+		}
+
+	}
+
+	private fun bindViews(_drink: Drink) {
+		binding.textViewTitle.text = _drink.strDrink
+		binding.textViewTags.text = _drink.strTags
+		binding.textViewCocktailType.text = _drink.strAlcoholic
+		binding.textViewIngredient1.text = _drink.strIngredient1
+		binding.textViewIngredient2.text = _drink.strIngredient2
+		binding.textViewIngredient3.text = _drink.strIngredient3
+		binding.textViewIngredient4.text = _drink.strIngredient4
+		binding.textViewDrinkCategory.text = _drink.strCategory
+		binding.textViewInstructions.text = _drink.strInstructions
+
+		Glide.with(binding.root)
+			.load(_drink.strDrinkThumb)
+			.centerCrop()
+			.error(R.drawable.cock_tail_thumbnail)
+			.into(binding.imageViewDescription)
 	}
 }

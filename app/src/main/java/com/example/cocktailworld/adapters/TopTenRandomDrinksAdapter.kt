@@ -13,18 +13,24 @@ import com.example.cocktailworld.R
 import com.example.cocktailworld.model.Drink
 import com.example.cocktailworld.model.Drinks
 
-class TopTenRandomDrinksAdapter: RecyclerView.Adapter<TopTenRandomDrinksAdapter.ViewHolder>() {
+class TopTenRandomDrinksAdapter(
+	private val onItemClick: (position: Int) -> Unit
+	): RecyclerView.Adapter<TopTenRandomDrinksAdapter.ViewHolder>() {
 
 	class ViewHolder(
-		itemView: View
-	): RecyclerView.ViewHolder(itemView) {
-		val textViewName: TextView
-		val textViewCategory: TextView
-		val imageViewDrink: ImageView
+		itemView: View,
+		private val onItemClick: (position: Int) -> Unit
+	): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+		val textViewName: TextView = itemView.findViewById(R.id.textView_name)
+		val textViewCategory: TextView = itemView.findViewById(R.id.textView_category)
+		val imageViewDrink: ImageView = itemView.findViewById(R.id.imageView_drink_image)
+
 		init {
-			textViewName = itemView.findViewById(R.id.textView_name)
-			textViewCategory = itemView.findViewById(R.id.textView_category)
-			imageViewDrink = itemView.findViewById(R.id.imageView_drink_image)
+			itemView.setOnClickListener(this)
+		}
+		override fun onClick(v: View?) {
+			val position = adapterPosition
+			onItemClick(position)
 		}
 	}
 
@@ -43,7 +49,8 @@ class TopTenRandomDrinksAdapter: RecyclerView.Adapter<TopTenRandomDrinksAdapter.
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
 		LayoutInflater
 			.from(parent.context)
-			.inflate(R.layout.top_ten_drink_item_layout,parent,false)
+			.inflate(R.layout.top_ten_drink_item_layout,parent,false),
+		onItemClick
 	)
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {

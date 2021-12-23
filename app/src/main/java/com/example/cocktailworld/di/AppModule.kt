@@ -2,7 +2,6 @@ package com.example.cocktailworld.di
 
 import android.content.Context
 import com.example.cocktailworld.BuildConfig
-import com.example.cocktailworld.data.api.ApiHelper
 import com.example.cocktailworld.data.api.ApiService
 import com.example.cocktailworld.utils.BASE_URL
 import dagger.Module
@@ -12,11 +11,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 

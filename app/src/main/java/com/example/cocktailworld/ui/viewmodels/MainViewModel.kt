@@ -20,10 +20,25 @@ class MainViewModel @Inject constructor(
 	val drinks: LiveData<Resource<Drinks>>
 	get() = _drinks
 
+	private val _latestDrinks = MutableLiveData<Resource<Drinks>>()
+	val latestDrinks: LiveData<Resource<Drinks>>
+		get() = _latestDrinks
+
+	private val _topDrinks = MutableLiveData<Resource<Drinks>>()
+	val topDrinks: LiveData<Resource<Drinks>>
+		get() = _topDrinks
+
+	private val _drink = MutableLiveData<Resource<Drinks>>()
+	val drink: LiveData<Resource<Drinks>>
+		get() = _drink
+
 	init {
 		fetchPopularDrinks()
 		fetchMostLatestDrinks()
 		fetchRandomTopDrinks()
+
+		val id: String? = null
+		id?.let { fetchDrinkDetails(it) }
 	}
 
 	 fun fetchPopularDrinks(){
@@ -36,17 +51,25 @@ class MainViewModel @Inject constructor(
 
 	fun fetchMostLatestDrinks(){
 		viewModelScope.launch {
-			_drinks.postValue(Resource.loading(null))
+			_latestDrinks.postValue(Resource.loading(null))
 			val response = mainRepository.getMostLatestCockTails()
-			_drinks.postValue(handleDrinksResponse(response))
+			_latestDrinks.postValue(handleDrinksResponse(response))
 		}
 	}
 
 	fun fetchRandomTopDrinks(){
 		viewModelScope.launch {
-			_drinks.postValue(Resource.loading(null))
+			_topDrinks.postValue(Resource.loading(null))
 			val response = mainRepository.getRandomTopCockTails()
-			_drinks.postValue(handleDrinksResponse(response))
+			_topDrinks.postValue(handleDrinksResponse(response))
+		}
+	}
+
+	fun fetchDrinkDetails(idDrink: String){
+		viewModelScope.launch {
+			_drink.postValue(Resource.loading(null))
+			val response = mainRepository.getDrinkDetails(idDrink)
+			_drink.postValue(handleDrinksResponse(response))
 		}
 	}
 

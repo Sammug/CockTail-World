@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
 import com.example.cocktailworld.model.Drink
-import com.example.cocktailworld.model.Drinks
 
-class LatestDrinksAdapter: RecyclerView.Adapter<LatestDrinksAdapter.ViewHolder>() {
+class LatestDrinksAdapter(private val onItemClick: (position: Int) -> Unit): RecyclerView.Adapter<LatestDrinksAdapter.ViewHolder>() {
 
-	class ViewHolder(
-		itemView: View
-	): RecyclerView.ViewHolder(itemView) {
+	inner class ViewHolder(
+		itemView: View,
+		private val onItemClick: (position: Int) -> Unit
+	): RecyclerView.ViewHolder(itemView),View.OnClickListener {
 		val textViewName: TextView
 		val textViewCategory: TextView
 		val imageViewDrink: ImageView
@@ -25,17 +25,24 @@ class LatestDrinksAdapter: RecyclerView.Adapter<LatestDrinksAdapter.ViewHolder>(
 			textViewName = itemView.findViewById(R.id.textView_name)
 			textViewCategory = itemView.findViewById(R.id.textView_category)
 			imageViewDrink = itemView.findViewById(R.id.imageView_drink_image)
+
+			itemView.setOnClickListener(this)
+		}
+
+		override fun onClick(v: View?) {
+			val position = adapterPosition
+			onItemClick(position)
 		}
 	}
 
 	private val differCallBack = object : DiffUtil.ItemCallback<Drink>(){
 		override fun areItemsTheSame(oldItem: Drink, newItem: Drink): Boolean {
-			return oldItem.idDrink == newItem.idDrink
+			return oldItem == newItem
 
 		}
 
 		override fun areContentsTheSame(oldItem: Drink, newItem: Drink): Boolean {
-			return oldItem == newItem
+			return oldItem.idDrink == newItem.idDrink
 		}
 	}
 	val differ = AsyncListDiffer(this,differCallBack)
@@ -43,7 +50,8 @@ class LatestDrinksAdapter: RecyclerView.Adapter<LatestDrinksAdapter.ViewHolder>(
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
 		LayoutInflater
 			.from(parent.context)
-			.inflate(R.layout.latest_drink_item_layout,parent,false)
+			.inflate(R.layout.latest_drink_item_layout,parent,false),
+		onItemClick
 	)
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
