@@ -6,4 +6,5 @@
     <string name="latest">Latest</string>
     <string name="api_key">3497db87fdmsh716c8ddd0791470p13569cjsnd8dab94e829f</string>
     <string name="Instructions">The Mojito is slightly more labor-intensive than other cocktails because it involves muddling the mint, but the end result is worth the effort. The mint combines with the other ingredients for an extra dose of refreshment that, while often associated with summer, can be enjoyed any time of the year</string>
+    <string name="Network_Status">You are offline, check your internet connection</string>
 </resources>

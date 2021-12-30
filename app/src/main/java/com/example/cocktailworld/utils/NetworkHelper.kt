@@ -7,6 +7,12 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import androidx.lifecycle.LiveData
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.InetSocketAddress
+import java.net.Socket
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,8 +30,7 @@ class NetworkHelper @Inject constructor(@ApplicationContext private val context:
 			val networkCapability = connectivityManager.getNetworkCapabilities(network)
 			val hasNetworkConnection = networkCapability?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)?:false
 			if (hasNetworkConnection){
-				validateNetworkCapabilities.add(network)
-				displayStatus()
+				confirmInternetConnection(network)
 			}
 		}
 
@@ -42,7 +47,7 @@ class NetworkHelper @Inject constructor(@ApplicationContext private val context:
 			super.onCapabilitiesChanged(network, networkCapabilities)
 
 			if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
-				validateNetworkCapabilities.add(network)
+				confirmInternetConnection(network)
 			}else{
 				validateNetworkCapabilities.remove(network)
 			}
@@ -70,5 +75,32 @@ class NetworkHelper @Inject constructor(@ApplicationContext private val context:
 	override fun onInactive() {
 		super.onInactive()
 		connectivityManager.unregisterNetworkCallback(connectivityManagerCallback)
+	}
+
+	fun confirmInternetConnection(network: Network){
+		CoroutineScope(Dispatchers.IO).launch {
+			if (CheckInternetAvailability.check()){
+				withContext(Dispatchers.Main){
+					validateNetworkCapabilities.add(network)
+					displayStatus()
+				}
+			}
+		}
+	}
+
+	object CheckInternetAvailability {
+
+		fun check() : Boolean {
+			return try {
+				val socket = Socket()
+				socket.connect(InetSocketAddress("8.8.8.8",53))
+				socket.close()
+				true
+			} catch ( e: Exception){
+				e.printStackTrace()
+				false
+			}
+		}
+
 	}
 }

@@ -18,6 +18,8 @@ import com.example.cocktailworld.adapters.PopularDrinksAdapter
 import com.example.cocktailworld.adapters.TopTenRandomDrinksAdapter
 import com.example.cocktailworld.databinding.FragmentHomeBinding
 import com.example.cocktailworld.ui.viewmodels.MainViewModel
+import com.example.cocktailworld.utils.NetworkHelper
+import com.example.cocktailworld.utils.NetworkStatus
 import com.example.cocktailworld.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,7 +53,11 @@ class HomeFragment : Fragment() {
 		setPopularDrinksRecyclerview()
 		setLatestDrinksRecyclerview()
 		setTopDrinksRecyclerView()
+		setObservables()
+	}
 
+	private fun setObservables() {
+		binding.textViewNetworkStatus.visibility = View.GONE
 		mainViewModel.drinks.observe(viewLifecycleOwner, {
 			when(it.status){
 				is Status.SUCCESS -> {
@@ -60,10 +66,13 @@ class HomeFragment : Fragment() {
 					}
 				}
 				is Status.ERROR -> {
-					Toast.makeText(requireContext(),"Error occured",Toast.LENGTH_LONG).show()
+					it.message?.let {message ->
+						binding.textViewNetworkStatus.visibility = View.VISIBLE
+						binding.textViewNetworkStatus.text = message
+					}
 				}
 				is Status.LOADING -> {
-					Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_LONG).show()
+					//Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_LONG).show()
 				}
 			}
 		})
@@ -76,10 +85,13 @@ class HomeFragment : Fragment() {
 					}
 				}
 				is Status.ERROR -> {
-					Toast.makeText(requireContext(),"Error occured",Toast.LENGTH_LONG).show()
+					it.message?.let {message ->
+						binding.textViewNetworkStatus.visibility = View.VISIBLE
+						binding.textViewNetworkStatus.text = message
+					}
 				}
 				is Status.LOADING -> {
-					Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_LONG).show()
+					//Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_LONG).show()
 				}
 			}
 		})
@@ -92,10 +104,13 @@ class HomeFragment : Fragment() {
 					}
 				}
 				is Status.ERROR -> {
-					Toast.makeText(requireContext(),"Error occured",Toast.LENGTH_LONG).show()
+					it.message?.let {message ->
+						binding.textViewNetworkStatus.visibility = View.VISIBLE
+						binding.textViewNetworkStatus.text = message
+					}
 				}
 				is Status.LOADING -> {
-					Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_LONG).show()
+					//Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_SHORT).show()
 				}
 			}
 		})
