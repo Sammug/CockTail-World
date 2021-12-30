@@ -18,6 +18,8 @@ import com.example.cocktailworld.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.Response
@@ -26,6 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
 	private val mainRepository: MainRepository,
+	private val networkHelper: NetworkHelper,
 	application: Application
 	): AndroidViewModel(application){
 	private val _drinks = MutableLiveData<Resource<Drinks>>()
@@ -44,28 +47,47 @@ class MainViewModel @Inject constructor(
 	val drink: LiveData<Resource<Drinks>>
 		get() = _drink
 
+	private val _onlineStatus = MutableSharedFlow<String>()
+	val onlineStatus = _onlineStatus.asSharedFlow()
+
 	val id: String? = null
 
 	init {
+		checkInternet()
 		fetchPopularDrinks()
 		fetchMostLatestDrinks()
 		fetchRandomTopDrinks()
 		id?.let { fetchDrinkDetails(it) }
 	}
+	private fun checkInternet(){
+		viewModelScope.launch {
+			val hasInternet: Boolean? = networkHelper.value
+			hasInternet?.let {
+				when(it){
+					true -> {
+						_onlineStatus.emit("online")
+					}
+					false -> {
+						_onlineStatus.emit("disconnected")
+					}
+				}
+			}
+		}
+	}
 
-	 fun fetchPopularDrinks(){
+	 private fun fetchPopularDrinks(){
 		viewModelScope.launch {
 			safePopularDrinksCall()
 		}
 	}
 
-	fun fetchMostLatestDrinks(){
+	private fun fetchMostLatestDrinks(){
 		viewModelScope.launch {
 			safeLatestDrinksCall()
 		}
 	}
 
-	fun fetchRandomTopDrinks(){
+	private fun fetchRandomTopDrinks(){
 		viewModelScope.launch {
 			safeRandomTopDrinksCall()
 		}
@@ -103,7 +125,6 @@ class MainViewModel @Inject constructor(
 				else -> _topDrinks.postValue(Resource.error("Unexpected error occurred", null))
 			}
 		}
-
 	}
 
 	private suspend fun safePopularDrinksCall(){
@@ -121,7 +142,6 @@ class MainViewModel @Inject constructor(
 				else -> _drinks.postValue(Resource.error("Unexpected error occurred", null))
 			}
 		}
-
 	}
 
 	private suspend fun safeLatestDrinksCall(){
@@ -139,7 +159,6 @@ class MainViewModel @Inject constructor(
 				else -> _latestDrinks.postValue(Resource.error("Unexpected error occurred", null))
 			}
 		}
-
 	}
 
 	private fun hasInternetConnection(): Boolean {

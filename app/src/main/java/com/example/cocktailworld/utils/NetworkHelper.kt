@@ -5,39 +5,47 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
 import javax.inject.Inject
 import javax.inject.Singleton
+import javax.net.SocketFactory
+
+val TAG = "Connectivity-Manager"
 
 @Singleton
 class NetworkHelper @Inject constructor(@ApplicationContext private val context: Context):
-	LiveData<NetworkStatus>(){
+	MutableLiveData<Boolean>(){
 	val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-	val validateNetworkCapabilities: ArrayList<Network> = ArrayList()
+	val validNetworkCapabilities: MutableSet<Network> = HashSet()
 	private lateinit var connectivityManagerCallback: ConnectivityManager.NetworkCallback
 
-	fun getConnectivityManagerCallback() = object : ConnectivityManager.NetworkCallback(){
+	private fun getConnectivityManagerCallback() = object : ConnectivityManager.NetworkCallback(){
 		override fun onAvailable(network: Network) {
 			super.onAvailable(network)
-
+			Log.d(TAG, "onAvailable: $network")
 			val networkCapability = connectivityManager.getNetworkCapabilities(network)
-			val hasNetworkConnection = networkCapability?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)?:false
-			if (hasNetworkConnection){
+			val hasNetworkConnection = networkCapability?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+			Log.d(TAG, "onAvailable: ${network}, $hasNetworkConnection")
+			if (hasNetworkConnection == true){
 				confirmInternetConnection(network)
 			}
 		}
 
 		override fun onLost(network: Network) {
 			super.onLost(network)
-			validateNetworkCapabilities.remove(network)
-			displayStatus()
+			Log.d(TAG, "onLost: $network")
+			validNetworkCapabilities.remove(network)
+			postValue(false)
 		}
 
 		override fun onCapabilitiesChanged(
@@ -49,18 +57,15 @@ class NetworkHelper @Inject constructor(@ApplicationContext private val context:
 			if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
 				confirmInternetConnection(network)
 			}else{
-				validateNetworkCapabilities.remove(network)
+				validNetworkCapabilities.remove(network)
+				postValue(false)
+				Log.d(TAG, "onCapabilitiesChanged. ${value}")
 			}
-			displayStatus()
 		}
 	}
 
-	private fun displayStatus() {
-		if (validateNetworkCapabilities.isNotEmpty()){
-			postValue(NetworkStatus.Connected)
-		}else{
-			postValue(NetworkStatus.Disconnected)
-		}
+	private fun checkCurrentValidNetworks() {
+		postValue(validNetworkCapabilities.size > 0)
 	}
 
 	override fun onActive() {
@@ -78,22 +83,24 @@ class NetworkHelper @Inject constructor(@ApplicationContext private val context:
 	}
 
 	fun confirmInternetConnection(network: Network){
+		Log.d(TAG,"CONFIRMING INTERNET CONNECTION $network")
 		CoroutineScope(Dispatchers.IO).launch {
-			if (CheckInternetAvailability.check()){
+			val hasInternet = CheckInternetAvailability.check(network.socketFactory)
+			if (hasInternet){
 				withContext(Dispatchers.Main){
-					validateNetworkCapabilities.add(network)
-					displayStatus()
+					Log.d(TAG, "onAvailable: adding network. ${network}")
+					validNetworkCapabilities.add(network)
+					postValue(true)
 				}
 			}
 		}
 	}
 
 	object CheckInternetAvailability {
-
-		fun check() : Boolean {
+		fun check(socketFactory: SocketFactory) : Boolean {
 			return try {
-				val socket = Socket()
-				socket.connect(InetSocketAddress("8.8.8.8",53))
+				val socket = socketFactory.createSocket() ?: throw IOException("Null socket.")
+				socket.connect(InetSocketAddress("8.8.8.8",53), 1500)
 				socket.close()
 				true
 			} catch ( e: Exception){
