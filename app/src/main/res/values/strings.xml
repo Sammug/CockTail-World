@@ -7,5 +7,13 @@
     <string name="api_key">3497db87fdmsh716c8ddd0791470p13569cjsnd8dab94e829f</string>
     <string name="Instructions">The Mojito is slightly more labor-intensive than other cocktails because it involves muddling the mint, but the end result is worth the effort. The mint combines with the other ingredients for an extra dose of refreshment that, while often associated with summer, can be enjoyed any time of the year</string>
     <string name="Network_Status">You are offline, check your internet connection</string>
-    <string name="offline">you are offline</string>
+    <string name="offline"> you are offline</string>
+    <string name="favourite_recipes">My favorite recipes</string>
+    <string name="summer_love_cocktail">Summer Love Cocktail</string>
+    <string name="instructions">Instructions:</string>
+    <string name="cocktail_type">Cocktail type</string>
+    <string name="category">Category</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="save_recipe">SAVE RECIPE</string>
+    <string name="like_button">Like Button</string>
 </resources>

@@ -3,14 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/icon_no_internet.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/font/font.xml" value="0.1881578947368421" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.16271929824561404" />
-        <entry key="app/src/main/res/layout/fragment_drink_details.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/latest_drink_item_layout.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/popular_drink_item_layout.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/top_ten_drink_item_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/menu/bottom_nav_bar_menu.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/favourite_recipes_item_layout.xml" value="0.19074074074074074" />
+        <entry key="app/src/main/res/layout/fragment_drink_details.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/latest_drink_item_layout.xml" value="0.16271929824561404" />
+        <entry key="app/src/main/res/layout/popular_drink_item_layout.xml" value="0.22" />
       </map>
     </option>
   </component>

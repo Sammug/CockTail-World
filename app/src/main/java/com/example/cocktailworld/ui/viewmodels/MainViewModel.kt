@@ -4,19 +4,15 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
-import android.net.Network
 import android.net.NetworkCapabilities.*
 import android.os.Build
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.cocktailworld.HiltApplication
+import com.example.cocktailworld.data.db.entities.Recipe
 import com.example.cocktailworld.data.repositories.MainRepository
 import com.example.cocktailworld.model.Drinks
 import com.example.cocktailworld.utils.NetworkHelper
-import com.example.cocktailworld.utils.NetworkStatus
 import com.example.cocktailworld.utils.Resource
-import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -148,7 +144,7 @@ class MainViewModel @Inject constructor(
 		_latestDrinks.postValue(Resource.loading(null))
 		try {
 			if (hasInternetConnection()){
-				val response = mainRepository.getPopularCockTails()
+				val response = mainRepository.getMostLatestCockTails()
 				_latestDrinks.postValue(handleDrinksResponse(response))
 			}else{
 				_latestDrinks.postValue(Resource.error("No internet connection",null))
@@ -185,5 +181,15 @@ class MainViewModel @Inject constructor(
 			}
 		}
 		return false
+	}
+
+	fun addToFavourites(recipe: Recipe) = viewModelScope.launch {
+		mainRepository.addFavDrink(recipe)
+	}
+
+	fun getAllFavDrinks() = mainRepository.getAllFavDrinks()
+
+	fun deleteFavRecipe(recipe: Recipe) = viewModelScope.launch {
+		mainRepository.deleteFavDrink(recipe)
 	}
 }

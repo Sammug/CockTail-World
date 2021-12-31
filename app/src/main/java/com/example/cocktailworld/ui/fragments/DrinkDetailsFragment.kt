@@ -7,16 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
+import com.example.cocktailworld.data.db.entities.Recipe
 import com.example.cocktailworld.databinding.FragmentDrinkDetailsBinding
 import com.example.cocktailworld.model.Drink
-import com.example.cocktailworld.model.Drinks
 import com.example.cocktailworld.ui.viewmodels.MainViewModel
 import com.example.cocktailworld.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
-import java.security.acl.Owner
+import java.util.*
 
 @AndroidEntryPoint
 class DrinkDetailsFragment : Fragment() {
@@ -26,12 +25,7 @@ class DrinkDetailsFragment : Fragment() {
 
 	private val mainViewModel:MainViewModel by viewModels()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		arguments?.let {
-
-		}
-	}
+	private lateinit var recipe: Recipe
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +45,9 @@ class DrinkDetailsFragment : Fragment() {
 				when(drinks.status){
 					is Status.SUCCESS -> {
 						drinks.data?.drinks.let { drink ->
-							drink?.map { _drink -> bindViews(_drink)
+							drink?.map { _drink ->
+								bindViews(_drink)
+								createRecipe(_drink)
 							}
 						}
 					}
@@ -65,6 +61,26 @@ class DrinkDetailsFragment : Fragment() {
 			})
 		}
 
+		binding.buttonSaveRecipe.setOnClickListener {
+			mainViewModel.addToFavourites(recipe)
+		}
+	}
+
+	private fun createRecipe(_drink: Drink) {
+		recipe = Recipe(
+			_drink.idDrink,
+			_drink.strDrink,
+			_drink.strTags,
+			_drink.strCategory,
+			_drink.strAlcoholic,
+			_drink.strGlass,
+			_drink.strInstructions,
+			_drink.strDrinkThumb,
+			_drink.strIngredient1,
+			_drink.strIngredient2,
+			_drink.strIngredient3,
+			_drink.strIngredient4
+		)
 	}
 
 	private fun bindViews(_drink: Drink) {

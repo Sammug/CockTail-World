@@ -35,9 +35,8 @@ class MainActivity : AppCompatActivity() {
 	get() = _bindng
 
 	private lateinit var networkHelper: NetworkHelper
-	private val viewModel: MainViewModel by viewModels()
 
-	private var snackBarView: Snackbar? = null
+	private lateinit var snackBarView: Snackbar
 
 
 	@RequiresApi(Build.VERSION_CODES.M)
@@ -50,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 		networkHelper.observe(this,{ hasInternet ->
 			when (hasInternet) {
 				false -> {
+					showStatusSnackBar("You are offline, turn on your cellular network or Wi-Fi and refresh")
 					binding.textViewOnlineOffline.visibility = View.VISIBLE
 					binding.textViewOnlineOffline.text = resources.getString(R.string.offline)
 				}
@@ -66,12 +66,13 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	@RequiresApi(Build.VERSION_CODES.M)
-	private fun showStatusSnackBar(status: String?) {
-		snackBarView = status?.let { Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE) }
-		val view  = snackBarView!!.view
+	private fun showStatusSnackBar(status: String) {
+		snackBarView = Snackbar.make(binding.root, status, Snackbar.LENGTH_SHORT)
+		val view  = snackBarView.view
 		val params =  view.layoutParams as FrameLayout.LayoutParams
 		params.gravity = Gravity.TOP
 		view.layoutParams = params
-		snackBarView!!.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+		snackBarView.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+		snackBarView.show()
 	}
 }
