@@ -12,12 +12,12 @@ import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
 import com.example.cocktailworld.model.Drink
 
-class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): RecyclerView.Adapter<PopularDrinksAdapter.ViewHolder>() {
+class LatestDrinksAdapter(private val onItemClick: (position: Int) -> Unit): RecyclerView.Adapter<LatestDrinksAdapter.ViewHolder>() {
 
-	class ViewHolder(
+	inner class ViewHolder(
 		itemView: View,
 		private val onItemClick: (position: Int) -> Unit
-	): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+	): RecyclerView.ViewHolder(itemView),View.OnClickListener {
 		val textViewName: TextView
 		val textViewCategory: TextView
 		val imageViewDrink: ImageView
@@ -25,6 +25,7 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): Re
 			textViewName = itemView.findViewById(R.id.textView_name)
 			textViewCategory = itemView.findViewById(R.id.textView_category)
 			imageViewDrink = itemView.findViewById(R.id.imageView_drink_image)
+
 			itemView.setOnClickListener(this)
 		}
 
@@ -36,12 +37,12 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): Re
 
 	private val differCallBack = object : DiffUtil.ItemCallback<Drink>(){
 		override fun areItemsTheSame(oldItem: Drink, newItem: Drink): Boolean {
-			return oldItem.idDrink == newItem.idDrink
+			return oldItem == newItem
 
 		}
 
 		override fun areContentsTheSame(oldItem: Drink, newItem: Drink): Boolean {
-			return oldItem == newItem
+			return oldItem.idDrink == newItem.idDrink
 		}
 	}
 	val differ = AsyncListDiffer(this,differCallBack)
@@ -49,7 +50,7 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): Re
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
 		LayoutInflater
 			.from(parent.context)
-			.inflate(R.layout.popular_drink_item_layout,parent,false),
+			.inflate(R.layout.latest_drink_item_layout,parent,false),
 		onItemClick
 	)
 

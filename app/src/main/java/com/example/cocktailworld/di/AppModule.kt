@@ -2,8 +2,9 @@ package com.example.cocktailworld.di
 
 import android.content.Context
 import com.example.cocktailworld.BuildConfig
-import com.example.cocktailworld.data.api.ApiHelper
-import com.example.cocktailworld.data.api.ApiService
+import com.example.cocktailworld.api.ApiService
+import com.example.cocktailworld.data.db.FavDrinksDatabase
+import com.example.cocktailworld.data.db.dao.FavouriteDrinksDao
 import com.example.cocktailworld.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -12,11 +13,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -48,10 +47,22 @@ object AppModule {
 		.addConverterFactory(GsonConverterFactory.create())
 		.build()
 
+	@Singleton
+	@Provides
+	fun provideDB(@ApplicationContext context: Context):FavDrinksDatabase{
+		return FavDrinksDatabase.invoke(context)
+	}
+
 
 	@Singleton
 	@Provides
 	fun provideApiService(retrofit: Retrofit) = retrofit.create(ApiService::class.java)
+
+	@Singleton
+	@Provides
+	fun providesDao(
+		favDrinksDatabase: FavDrinksDatabase
+	): FavouriteDrinksDao = favDrinksDatabase.favouriteDrinksDao
 
 	private val authInterceptor = Interceptor { chain ->
 		val request: Request = chain.request().newBuilder()

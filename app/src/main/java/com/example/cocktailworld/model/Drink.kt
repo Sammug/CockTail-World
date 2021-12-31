@@ -12,5 +12,9 @@ data class Drink(
 	val strAlcoholic: String,
 	val strGlass: String?,
 	val strInstructions: String?,
-	val strDrinkThumb: String
+	val strDrinkThumb: String,
+	val strIngredient1: String,
+	val strIngredient2: String,
+	val strIngredient3: String,
+	val strIngredient4: String
 ): Parcelable

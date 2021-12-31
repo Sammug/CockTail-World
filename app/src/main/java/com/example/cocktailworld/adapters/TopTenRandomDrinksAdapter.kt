@@ -12,22 +12,21 @@ import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
 import com.example.cocktailworld.model.Drink
 
-class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): RecyclerView.Adapter<PopularDrinksAdapter.ViewHolder>() {
+class TopTenRandomDrinksAdapter(
+	private val onItemClick: (position: Int) -> Unit
+	): RecyclerView.Adapter<TopTenRandomDrinksAdapter.ViewHolder>() {
 
 	class ViewHolder(
 		itemView: View,
 		private val onItemClick: (position: Int) -> Unit
 	): RecyclerView.ViewHolder(itemView), View.OnClickListener {
-		val textViewName: TextView
-		val textViewCategory: TextView
-		val imageViewDrink: ImageView
+		val textViewName: TextView = itemView.findViewById(R.id.textView_name)
+		val textViewCategory: TextView = itemView.findViewById(R.id.textView_category)
+		val imageViewDrink: ImageView = itemView.findViewById(R.id.imageView_drink_image)
+
 		init {
-			textViewName = itemView.findViewById(R.id.textView_name)
-			textViewCategory = itemView.findViewById(R.id.textView_category)
-			imageViewDrink = itemView.findViewById(R.id.imageView_drink_image)
 			itemView.setOnClickListener(this)
 		}
-
 		override fun onClick(v: View?) {
 			val position = adapterPosition
 			onItemClick(position)
@@ -49,7 +48,7 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): Re
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
 		LayoutInflater
 			.from(parent.context)
-			.inflate(R.layout.popular_drink_item_layout,parent,false),
+			.inflate(R.layout.top_ten_drink_item_layout,parent,false),
 		onItemClick
 	)
 

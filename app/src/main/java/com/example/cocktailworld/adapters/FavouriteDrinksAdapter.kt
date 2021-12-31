@@ -10,37 +10,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailworld.R
+import com.example.cocktailworld.data.db.entities.Recipe
 import com.example.cocktailworld.model.Drink
 
-class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): RecyclerView.Adapter<PopularDrinksAdapter.ViewHolder>() {
+class FavouriteDrinksAdapter: RecyclerView.Adapter<FavouriteDrinksAdapter.ViewHolder>() {
 
-	class ViewHolder(
-		itemView: View,
-		private val onItemClick: (position: Int) -> Unit
-	): RecyclerView.ViewHolder(itemView), View.OnClickListener {
-		val textViewName: TextView
-		val textViewCategory: TextView
-		val imageViewDrink: ImageView
-		init {
-			textViewName = itemView.findViewById(R.id.textView_name)
-			textViewCategory = itemView.findViewById(R.id.textView_category)
-			imageViewDrink = itemView.findViewById(R.id.imageView_drink_image)
-			itemView.setOnClickListener(this)
-		}
-
-		override fun onClick(v: View?) {
-			val position = adapterPosition
-			onItemClick(position)
-		}
+	inner class ViewHolder(
+		itemView: View
+	): RecyclerView.ViewHolder(itemView){
+		val textViewName: TextView = itemView.findViewById(R.id.textView_name)
+		val textViewCategory: TextView = itemView.findViewById(R.id.textView_category)
+		val imageViewDrink: ImageView = itemView.findViewById(R.id.imageView_drink_image)
 	}
 
-	private val differCallBack = object : DiffUtil.ItemCallback<Drink>(){
-		override fun areItemsTheSame(oldItem: Drink, newItem: Drink): Boolean {
+	private val differCallBack = object : DiffUtil.ItemCallback<Recipe>(){
+		override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
 			return oldItem.idDrink == newItem.idDrink
-
 		}
 
-		override fun areContentsTheSame(oldItem: Drink, newItem: Drink): Boolean {
+		override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
 			return oldItem == newItem
 		}
 	}
@@ -49,8 +37,7 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): Re
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
 		LayoutInflater
 			.from(parent.context)
-			.inflate(R.layout.popular_drink_item_layout,parent,false),
-		onItemClick
+			.inflate(R.layout.favourite_recipes_item_layout,parent,false)
 	)
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
