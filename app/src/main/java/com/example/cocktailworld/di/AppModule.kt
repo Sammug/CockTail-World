@@ -5,6 +5,7 @@ import com.example.cocktailworld.BuildConfig
 import com.example.cocktailworld.api.ApiService
 import com.example.cocktailworld.data.db.FavDrinksDatabase
 import com.example.cocktailworld.data.db.dao.FavouriteDrinksDao
+import com.example.cocktailworld.utils.API_KEY
 import com.example.cocktailworld.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -67,7 +68,7 @@ object AppModule {
 	private val authInterceptor = Interceptor { chain ->
 		val request: Request = chain.request().newBuilder()
 			.addHeader("x-rapidapi-host", "the-cocktail-db.p.rapidapi.com")
-			.addHeader("x-rapidapi-key", "e7c584bbb3msha47f13b481c1232p15ff0ajsnf86688373661")
+			.addHeader("x-rapidapi-key", API_KEY)
 			.build()
 		chain.proceed(request)
 	}

@@ -1,3 +1,6 @@
 package com.example.cocktailworld.utils
 
-const val BASE_URL = "https://the-cocktail-db.p.rapidapi.com/"
+import com.example.cocktailworld.BuildConfig
+
+const val BASE_URL = BuildConfig.BASE_URL
+const val API_KEY = BuildConfig.APIKEY
