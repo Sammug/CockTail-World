@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,9 +17,8 @@ import com.example.cocktailworld.adapters.PopularDrinksAdapter
 import com.example.cocktailworld.adapters.TopTenRandomDrinksAdapter
 import com.example.cocktailworld.databinding.FragmentHomeBinding
 import com.example.cocktailworld.ui.viewmodels.MainViewModel
-import com.example.cocktailworld.utils.NetworkHelper
-import com.example.cocktailworld.utils.NetworkStatus
 import com.example.cocktailworld.utils.Status
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +50,7 @@ class HomeFragment : Fragment() {
 
 		setPopularDrinksRecyclerview()
 		setLatestDrinksRecyclerview()
-		setTopDrinksRecyclerView()
+		setTopDrinksViewPager()
 		setObservables()
 	}
 
@@ -116,15 +114,19 @@ class HomeFragment : Fragment() {
 		})
 	}
 
-	private fun setTopDrinksRecyclerView() {
-		val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
-		binding.recyclerViewTopTenDrinks.layoutManager = layoutManager
-		binding.recyclerViewTopTenDrinks.hasFixedSize()
-		binding.recyclerViewTopTenDrinks.adapter  = adapterTopTenDrinks
+	private fun setTopDrinksViewPager() {
+		//val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
+//		binding.viewPagerTopTenDrinks.layoutManager = layoutManager
+//		binding.recyclerViewTopTenDrinks.hasFixedSize()
+		binding.viewPagerTopTenDrinks.adapter  = adapterTopTenDrinks
+
+		TabLayoutMediator(binding.tabLayout,binding.viewPagerTopTenDrinks){tab,position ->
+
+		}.attach()
 	}
 
 	private fun setLatestDrinksRecyclerview() {
-		val layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL,false)
+		val layoutManager = GridLayoutManager(activity,2,GridLayoutManager.VERTICAL,false)
 		binding.recyclerViewLatestDrinks.layoutManager = layoutManager
 		binding.recyclerViewLatestDrinks.hasFixedSize()
 		binding.recyclerViewLatestDrinks.adapter  = adapterLatest

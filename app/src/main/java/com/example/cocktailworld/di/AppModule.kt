@@ -3,7 +3,7 @@ package com.example.cocktailworld.di
 import android.content.Context
 import com.example.cocktailworld.BuildConfig
 import com.example.cocktailworld.api.ApiService
-import com.example.cocktailworld.data.db.FavDrinksDatabase
+import com.example.cocktailworld.data.db.DrinksDatabase
 import com.example.cocktailworld.data.db.dao.FavouriteDrinksDao
 import com.example.cocktailworld.utils.API_KEY
 import com.example.cocktailworld.utils.BASE_URL
@@ -50,8 +50,8 @@ object AppModule {
 
 	@Singleton
 	@Provides
-	fun provideDB(@ApplicationContext context: Context):FavDrinksDatabase{
-		return FavDrinksDatabase.invoke(context)
+	fun provideDB(@ApplicationContext context: Context):DrinksDatabase{
+		return DrinksDatabase.invoke(context)
 	}
 
 
@@ -62,39 +62,40 @@ object AppModule {
 	@Singleton
 	@Provides
 	fun providesDao(
-		favDrinksDatabase: FavDrinksDatabase
-	): FavouriteDrinksDao = favDrinksDatabase.favouriteDrinksDao
+		drinksDatabase: DrinksDatabase
+	): FavouriteDrinksDao =
+		drinksDatabase.favouriteDrinksDao
 
-	private val authInterceptor = Interceptor { chain ->
-		val request: Request = chain.request().newBuilder()
-			.addHeader("x-rapidapi-host", "the-cocktail-db.p.rapidapi.com")
-			.addHeader("x-rapidapi-key", API_KEY)
-			.build()
-		chain.proceed(request)
-	}
+		private val authInterceptor = Interceptor { chain ->
+			val request: Request = chain.request().newBuilder()
+				.addHeader("x-rapidapi-host", "the-cocktail-db.p.rapidapi.com")
+				.addHeader("x-rapidapi-key", API_KEY)
+				.build()
+			chain.proceed(request)
+		}
 
-	private val cacheInterceptor = Interceptor { chain ->
-		val response: Response = chain.proceed(chain.request())
-		val cacheControl = CacheControl.Builder()
-			.maxAge(30, TimeUnit.DAYS)
-			.build()
-		response.newBuilder()
-			.header("Cache-Control", cacheControl.toString())
-			.build()
-	}
+		private val cacheInterceptor = Interceptor { chain ->
+			val response: Response = chain.proceed(chain.request())
+			val cacheControl = CacheControl.Builder()
+				.maxAge(30, TimeUnit.DAYS)
+				.build()
+			response.newBuilder()
+				.header("Cache-Control", cacheControl.toString())
+				.build()
+		}
 
-	/*Caching data */
-	@Provides
-	@Singleton
-	fun provideCache(@ApplicationContext appContext: Context): Cache {
+		/*Caching data */
+		@Provides
+		@Singleton
+		fun provideCache(@ApplicationContext appContext: Context): Cache {
 
-		return Cache(
-			File(appContext.applicationContext.cacheDir, "cocktails_cache"),
-			10 * 1024 * 1024
-		)
-	}
+			return Cache(
+				File(appContext.applicationContext.cacheDir, "cocktails_cache"),
+				10 * 1024 * 1024
+			)
+		}
 
-	private val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
-		level = HttpLoggingInterceptor.Level.BODY
-	}
+		private val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+			level = HttpLoggingInterceptor.Level.BODY
+		}
 }

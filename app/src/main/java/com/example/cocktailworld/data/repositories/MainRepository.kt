@@ -1,7 +1,7 @@
 package com.example.cocktailworld.data.repositories
 
 import com.example.cocktailworld.api.ApiService
-import com.example.cocktailworld.data.db.FavDrinksDatabase
+import com.example.cocktailworld.data.db.DrinksDatabase
 import com.example.cocktailworld.data.db.entities.Recipe
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class MainRepository @Inject constructor(
 	private val apiService: ApiService,
-	private val favDrinksDatabase: FavDrinksDatabase
+	private val favDrinksDatabase: DrinksDatabase
 	) {
 	suspend fun getPopularCockTails() = apiService.getPopularCockTails()
 	suspend fun getMostLatestCockTails() = apiService.getMostLatestCockTails()

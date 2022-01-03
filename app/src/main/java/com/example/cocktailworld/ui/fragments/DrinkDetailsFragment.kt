@@ -55,7 +55,7 @@ class DrinkDetailsFragment : Fragment() {
 						Toast.makeText(requireContext(),"Error occured", Toast.LENGTH_LONG).show()
 					}
 					is Status.LOADING -> {
-						Toast.makeText(requireContext(),"LOADING..", Toast.LENGTH_LONG).show()
+						//Toast.makeText(requireContext(),"LOADING..", Toast.LENGTH_LONG).show()
 					}
 				}
 			})
