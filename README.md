@@ -33,10 +33,9 @@ Libraries used in the whole application are:
   - [View Binding](https://developer.android.com/topic/libraries/view-binding) - recommended library that replaces findViewById()
   - [Room](https://developer.android.com/training/data-storage/room) - It's a persistence library that provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite.
 - [Retrofit](https://square.github.io/retrofit/) - Type-safe HTTP client and supports coroutines out of the box.  Used for the network calls.
-- [Gson](https://github.com/google/gson) - Used to convert JSON to Java/Kotlin classes for the Retrofit
-- [okhttp-logging-interceptor](https://github.com/square/okhttp/blob/master/okhttp-logging-interceptor/README.md) - logs HTTP request and response data.
-- [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines) - Library Support for coroutines
--  [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Used for Dependency injection in android
+- [Gson](https://github.com/google/gson) - For converting data objects to JSON representation and vice-versa
+- [okhttp-logging-interceptor](https://github.com/square/okhttp/blob/master/okhttp-logging-interceptor/README.md) - For logging HTTP requests and response data.
+- [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Used for Dependency injection in android
 - [Glide](https://github.com/bumptech/glide) ~Glide is a fast and efficient open source media management and image loading framework for Android that wraps media decoding, memory and disk caching, and resource pooling into a simple and easy to use interface.
 
 ## Demo
