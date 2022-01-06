@@ -1,7 +1,7 @@
 
 # Cock-tail World
 
-This app consumes The Cock-tail DB cocktail recipes using mvvm achitecture.
+This app consumes The Cock-tail DB cocktail recipes using Retrofit.
 
 Build System : [Gradle](https://gradle.org/)
 
@@ -47,5 +47,3 @@ Libraries used in the whole application are:
 
 |<img src="screenshots/home.jpeg" width=200/>|<img src="screenshots/home_scrolled.jpeg" width=200/>|<img src="screenshots/details.jpeg" width=200/>|
 <img src="screenshots/favourites_saved_recipes.jpeg" width=200/>|
-|:----:|:----:||:----:|:----:|
-
