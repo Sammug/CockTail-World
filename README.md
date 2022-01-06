@@ -42,7 +42,7 @@ Libraries used in the whole application are:
 ## Demo
 
 ![](https://github.com/Sammug/CockTail-World/blob/main/demo/first%20demo.gif)
-<img src="https://github.com/Sammug/CockTail-World/blob/main/demo/first%20demo.gif" width=400 height=400/>
+<img src="https://github.com/Sammug/CockTail-World/blob/main/demo/first%20demo.gif" width=200 height=400/>
 
 ## Screenshots
 
