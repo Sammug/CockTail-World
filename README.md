@@ -46,9 +46,9 @@ You can get a video detailing the usage [Here](https://drive.google.com/file/d/1
 ## Screenshots
 
 |<img src="screenshots/home.jpeg" width=200/>|<img src="screenshots/home_scrolled.jpeg" width=200/>|<img src="screenshots/details.jpeg" width=200/>|
-<img src="screenshots/favourites_saved.jpeg" width=200/>|
+<img src="screenshots/favourites_saved_recipes.jpeg" width=200/>|
 |:----:|:----:||:----:|:----:|
 
-|<img src="demo/collapsed.gif" width=200/>|
+![](demo/demo.gif)
 |:----:|
 
