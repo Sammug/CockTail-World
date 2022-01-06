@@ -38,7 +38,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/sora_extra_bold"
                 android:hint="Mojito"
-                android:textColor="@color/secondaryTextColor"
+                android:textColor="@color/primaryGoldenColor"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView_drink_image"

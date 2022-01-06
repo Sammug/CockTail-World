@@ -42,7 +42,7 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/sora_extra_bold"
                 android:hint="Mojito"
-                android:textColor="@color/secondaryTextColor"
+                android:textColor="@color/primaryGoldenColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView_category"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment2"
-        android:name="com.example.cocktailworld.ui.fragments.HomeFragment"
+        android:name="com.david.cocktailworld.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -28,17 +28,17 @@
     </fragment>
     <fragment
         android:id="@+id/drinkDetailsFragment"
-        android:name="com.example.cocktailworld.ui.fragments.DrinkDetailsFragment"
+        android:name="com.david.cocktailworld.ui.fragments.DrinkDetailsFragment"
         android:label="fragment_drink_details"
         tools:layout="@layout/fragment_drink_details" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.cocktailworld.auth.SignUpFragment"
+        android:name="com.david.cocktailworld.auth.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.cocktailworld.auth.SignInFragment"
+        android:name="com.david.cocktailworld.auth.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -50,17 +50,17 @@
     </fragment>
     <fragment
         android:id="@+id/searchDrinksFragment"
-        android:name="com.example.cocktailworld.ui.fragments.SearchDrinksFragment"
+        android:name="com.david.cocktailworld.ui.fragments.SearchDrinksFragment"
         android:label="fragment_search_drinks"
         tools:layout="@layout/fragment_search_drinks" />
     <fragment
         android:id="@+id/createRecipeFragment"
-        android:name="com.example.cocktailworld.ui.fragments.CreateRecipeFragment"
+        android:name="com.david.cocktailworld.ui.fragments.CreateRecipeFragment"
         android:label="fragment_create_recipe"
         tools:layout="@layout/fragment_create_recipe" />
     <fragment
         android:id="@+id/favouritesFragment"
-        android:name="com.example.cocktailworld.ui.fragments.FavouritesFragment"
+        android:name="com.david.cocktailworld.ui.fragments.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" />
 </navigation>

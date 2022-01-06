@@ -25,7 +25,7 @@
         android:id="@+id/backButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:padding="5dp"
         app:cardBackgroundColor="@color/primaryLightColor"
@@ -44,12 +44,15 @@
 
     <ImageView
         android:id="@+id/imageView_description"
-        android:layout_width="250dp"
-        android:layout_height="320dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="0dp"
+        android:layout_height="284dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="centerCrop"
         android:background="@color/primaryLightColor"
         android:src="@drawable/cock_tail_thumbnail"
+        app:layout_constraintEnd_toStartOf="@+id/materialCardView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
@@ -64,21 +67,23 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="@+id/backButton" />
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
+        android:id="@+id/materialCardView2"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/primaryLightColor"
         app:cardCornerRadius="5dp"
-        app:cardElevation="0.5dp"
+        app:cardElevation="5dp"
+        app:contentPadding="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView_description"
-        app:layout_constraintTop_toTopOf="@+id/imageView_description">
+        app:layout_constraintTop_toTopOf="@+id/imageView_description"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -103,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/sora_regular"
-                android:text="Cocktail"
+                android:hint="Cocktail"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/textView6"
@@ -129,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/sora_regular"
-                android:text="Alcoholic"
+                android:hint="Alcoholic"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="@+id/textView8"
@@ -144,8 +149,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/rota_regular"
-                android:text="Tags, Tags, Tags, Tags"
                 android:gravity="center"
+                android:text=""
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -157,10 +162,9 @@
         android:id="@+id/materialCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:padding="10dp"
+        android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/primaryLightColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,8 +177,9 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:fontFamily="@font/rota_semi_bold"
-            android:text="@string/Instructions"
             android:letterSpacing="0.05"
+            android:padding="10dp"
+            android:text=""
             android:textColor="@color/secondaryTextColor"
             android:textSize="16sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -196,26 +201,21 @@
         android:id="@+id/textView_ingredient1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text=""
         android:fontFamily="@font/sora_medium"
+        android:text=""
         android:textColor="@color/secondaryTextColor"
-        app:layout_constraintBottom_toTopOf="@+id/textView_ingredient2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView_ingredient2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text=""
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/sora_medium"
+        android:text=""
         android:textColor="@color/secondaryTextColor"
-        app:layout_constraintBottom_toTopOf="@+id/textView_ingredient3"
         app:layout_constraintStart_toStartOf="@+id/textView_ingredient1"
         app:layout_constraintTop_toBottomOf="@+id/textView_ingredient1" />
 
@@ -223,44 +223,36 @@
         android:id="@+id/textView_ingredient3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:layout_marginStart="16dp"
         android:fontFamily="@font/sora_medium"
+        android:text=""
         android:textColor="@color/secondaryTextColor"
-        app:layout_constraintBottom_toTopOf="@+id/textView_ingredient4"
-        app:layout_constraintStart_toStartOf="@+id/textView_ingredient2"
-        app:layout_constraintTop_toBottomOf="@+id/textView_ingredient2" />
+        app:layout_constraintStart_toEndOf="@+id/textView_ingredient1"
+        app:layout_constraintTop_toTopOf="@+id/textView_ingredient1" />
 
     <TextView
         android:id="@+id/textView_ingredient4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text=""
         android:fontFamily="@font/sora_medium"
+        android:text=""
         android:textColor="@color/secondaryTextColor"
-        app:layout_constraintStart_toStartOf="@+id/textView_ingredient3"
+        app:layout_constraintStart_toEndOf="@+id/textView_ingredient2"
         app:layout_constraintTop_toBottomOf="@+id/textView_ingredient3" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_save_recipe"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_favourite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="48dp"
         android:background="@color/primaryLightColor"
-        android:backgroundTint="@null"
-        android:fontFamily="@font/rota_bold"
-        android:text="@string/save_recipe"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="16sp"
+        android:src="@drawable/icon_liked"
         app:backgroundTint="@color/primaryLightColor"
-        app:cornerRadius="5dp"
-        app:icon="@drawable/icon_liked"
-        app:iconTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_ingredient4" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
