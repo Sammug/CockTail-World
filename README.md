@@ -45,7 +45,7 @@ You can get a video detailing the usage [Here](https://drive.google.com/file/d/1
 
 ## Screenshots
 
-|<img src="screenshots/home.jpg" width=200/>|<img src="screenshots/search.jpg" width=200/>|<img src="screenshots/full.jpg" width=200/>|
+|<img src="screenshots/home.jpeg" width=200/>|<img src="screenshots/home-scrolled.jpeg" width=200/>|<img src="screenshots/details.jpeg" width=200/>|
 |:----:|:----:|:----:|
 
 |<img src="screenshots/collapsed.jpg" width=200/>|<img src="screenshots/dialog.jpg" width=200/>|
