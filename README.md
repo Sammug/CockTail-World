@@ -41,14 +41,11 @@ Libraries used in the whole application are:
 
 ## Demo
 
-You can get a video detailing the usage [Here](https://drive.google.com/file/d/1OsGM0QfI5sjC6SL8IFU5zMN8xWMBfXCr/view?usp=sharing)
+![](https://github.com/Sammug/CockTail-World/blob/main/demo/first%20demo.gif =200*400)
 
 ## Screenshots
 
 |<img src="screenshots/home.jpeg" width=200/>|<img src="screenshots/home_scrolled.jpeg" width=200/>|<img src="screenshots/details.jpeg" width=200/>|
 <img src="screenshots/favourites_saved_recipes.jpeg" width=200/>|
 |:----:|:----:||:----:|:----:|
-
-![](https://github.com/Sammug/CockTail-World/blob/main/demo/first%20demo.gif)
-|:----:|
 
