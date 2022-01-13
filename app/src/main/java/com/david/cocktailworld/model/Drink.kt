@@ -5,8 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
+@Entity(tableName = "cocktails_table")
 @Parcelize
 data class Drink(
+	@PrimaryKey(autoGenerate = false)
 	val idDrink: String,
 	val strDrink: String,
 	val strTags: String?,

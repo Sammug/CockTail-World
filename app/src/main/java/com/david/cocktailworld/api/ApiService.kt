@@ -22,4 +22,10 @@ interface ApiService {
 	suspend fun getDrinkDetails(
 		@Query("i") drinkId: String
 	): Response<Drinks>
+
+	@GET("popular.php")
+	suspend fun getPopularCockTails(
+		@Query("loaded_page_items") loaded_items_per_page: Int?,
+		@Query("page") page: Int?
+	): Drinks
 }
