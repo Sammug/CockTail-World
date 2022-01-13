@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 	private var _binding: FragmentHomeBinding? = null
-	val binding: FragmentHomeBinding
+	private val binding: FragmentHomeBinding
 	get() = _binding!!
 
 	private lateinit var navController: NavController
@@ -47,6 +48,10 @@ class HomeFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 		navController = binding.root.findNavController()
 
+		binding.textViewPopular.isVisible = false
+		binding.textViewMore.isVisible = false
+		binding.textViewLatest.isVisible = false
+
 		adapterTopFivePopular = TopFivePopularDrinksAdapter{ position ->  onPopularDrinkItemClicked(position)}
 		adapterLatest = LatestDrinksAdapter { position -> onLatestItemClicked(position) }
 		adapterTopTenDrinks = TopTenRandomDrinksAdapter{position -> onRandomDrinksItemClicked(position)}
@@ -66,6 +71,11 @@ class HomeFragment : Fragment() {
 		mainViewModel.drinks.observe(viewLifecycleOwner, {
 			when(it.status){
 				is Status.SUCCESS -> {
+					binding.progressBar.isVisible = false
+					binding.textViewPopular.isVisible = true
+					binding.textViewMore.isVisible = true
+					binding.textViewLatest.isVisible = true
+
 					it.data?.let { drinks ->
 						adapterTopFivePopular.differ.submitList(drinks.drinks.subList(0,5))
 					}
@@ -77,7 +87,10 @@ class HomeFragment : Fragment() {
 					}
 				}
 				is Status.LOADING -> {
-					//Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_LONG).show()
+					binding.progressBar.isVisible = true
+					binding.textViewPopular.isVisible = false
+					binding.textViewMore.isVisible = false
+					binding.textViewLatest.isVisible = false
 				}
 			}
 		})
@@ -85,6 +98,10 @@ class HomeFragment : Fragment() {
 		mainViewModel.latestDrinks.observe(viewLifecycleOwner, {
 			when(it.status){
 				is Status.SUCCESS -> {
+					binding.progressBar.isVisible = false
+					binding.textViewPopular.isVisible = true
+					binding.textViewMore.isVisible = true
+					binding.textViewLatest.isVisible = true
 					it.data?.let { drinks ->
 						adapterLatest.differ.submitList(drinks.drinks)
 					}
@@ -96,7 +113,10 @@ class HomeFragment : Fragment() {
 					}
 				}
 				is Status.LOADING -> {
-					//Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_LONG).show()
+					binding.progressBar.isVisible = true
+					binding.textViewMore.isVisible = false
+					binding.textViewPopular.isVisible = false
+					binding.textViewLatest.isVisible = false
 				}
 			}
 		})
@@ -104,6 +124,7 @@ class HomeFragment : Fragment() {
 		mainViewModel.topDrinks.observe(viewLifecycleOwner, {
 			when(it.status){
 				is Status.SUCCESS -> {
+					binding.progressBar.isVisible = false
 					it.data?.let { drinks ->
 						adapterTopTenDrinks.differ.submitList(drinks.drinks)
 					}
@@ -115,7 +136,7 @@ class HomeFragment : Fragment() {
 					}
 				}
 				is Status.LOADING -> {
-					//Toast.makeText(requireContext(),"LOADING..",Toast.LENGTH_SHORT).show()
+					binding.progressBar.isVisible = true
 				}
 			}
 		})
