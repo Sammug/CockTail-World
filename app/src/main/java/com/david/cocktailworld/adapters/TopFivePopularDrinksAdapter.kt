@@ -5,8 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.AsyncPagingDataDiffer
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,8 +12,7 @@ import com.bumptech.glide.Glide
 import com.david.cocktailworld.R
 import com.david.cocktailworld.model.Drink
 
-class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit):
-	PagingDataAdapter<Drink,PopularDrinksAdapter.ViewHolder>(DiffCallBack()) {
+class TopFivePopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit): RecyclerView.Adapter<TopFivePopularDrinksAdapter.ViewHolder>() {
 
 	class ViewHolder(
 		itemView: View,
@@ -24,7 +21,6 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit):
 		val textViewName: TextView = itemView.findViewById(R.id.textView_name)
 		val textViewCategory: TextView = itemView.findViewById(R.id.textView_category)
 		val imageViewDrink: ImageView = itemView.findViewById(R.id.imageView_drink_image)
-		val textViewDrinkTags: TextView = itemView.findViewById(R.id.textView_category_tags)
 
 		init {
 			itemView.setOnClickListener(this)
@@ -36,7 +32,7 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit):
 		}
 	}
 
-	private class DiffCallBack: DiffUtil.ItemCallback<Drink>(){
+	private val differCallBack = object : DiffUtil.ItemCallback<Drink>(){
 		override fun areItemsTheSame(oldItem: Drink, newItem: Drink): Boolean {
 			return oldItem.idDrink == newItem.idDrink
 
@@ -46,27 +42,28 @@ class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit):
 			return oldItem == newItem
 		}
 	}
-	//val differ = AsyncPagingDataDiffer(this,differCallBack)
+	val differ = AsyncListDiffer(this,differCallBack)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
 		LayoutInflater
 			.from(parent.context)
-			.inflate(R.layout.popular_drinks_item_layout,parent,false),
+			.inflate(R.layout.top_five_popular_drinks_item_layout,parent,false),
 		onItemClick
 	)
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		val drink= getItem(position)
-		val data: Drink? = drink
-		data?.let {
-			holder.textViewName.text = it.strDrink
-			holder.textViewCategory.text = it.strCategory
-			holder.textViewDrinkTags.text = it.strTags
+		val drink = differ.currentList[position]
+		holder.textViewName.text = drink.strDrink
+		holder.textViewCategory.text = drink.strCategory
 
-			Glide.with(holder.itemView.context)
-				.load(it.strDrinkThumb)
-				.error(R.drawable.cock_tail_thumbnail)
-				.into(holder.imageViewDrink)
-		}
+		Glide.with(holder.itemView.context)
+			.load(drink.strDrinkThumb)
+			.error(R.drawable.cock_tail_thumbnail)
+			.into(holder.imageViewDrink)
+
+	}
+
+	override fun getItemCount(): Int {
+		return differ.currentList.size
 	}
 }

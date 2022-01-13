@@ -57,7 +57,11 @@
         android:id="@+id/createRecipeFragment"
         android:name="com.david.cocktailworld.ui.fragments.CreateRecipeFragment"
         android:label="fragment_create_recipe"
-        tools:layout="@layout/fragment_create_recipe" />
+        tools:layout="@layout/fragment_popular_drinks" >
+        <action
+            android:id="@+id/action_createRecipeFragment_to_drinkDetailsFragment"
+            app:destination="@id/drinkDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
         android:name="com.david.cocktailworld.ui.fragments.FavouritesFragment"

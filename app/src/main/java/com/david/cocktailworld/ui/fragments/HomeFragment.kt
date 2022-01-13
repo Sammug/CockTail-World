@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.david.cocktailworld.R
 import com.david.cocktailworld.adapters.LatestDrinksAdapter
-import com.david.cocktailworld.adapters.PopularDrinksAdapter
+import com.david.cocktailworld.adapters.TopFivePopularDrinksAdapter
 import com.david.cocktailworld.adapters.TopTenRandomDrinksAdapter
 import com.david.cocktailworld.databinding.FragmentHomeBinding
 import com.david.cocktailworld.ui.viewmodels.MainViewModel
@@ -27,7 +27,8 @@ class HomeFragment : Fragment() {
 	val binding: FragmentHomeBinding
 	get() = _binding!!
 
-	private lateinit var adapterPopular: PopularDrinksAdapter
+	private lateinit var navController: NavController
+	private lateinit var adapterTopFivePopular: TopFivePopularDrinksAdapter
 	private lateinit var adapterLatest: LatestDrinksAdapter
 	private lateinit var adapterTopTenDrinks: TopTenRandomDrinksAdapter
 	private val mainViewModel: MainViewModel by viewModels()
@@ -44,24 +45,29 @@ class HomeFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		navController = binding.root.findNavController()
 
-		adapterPopular = PopularDrinksAdapter{position ->  onPopularDrinkItemClicked(position)}
+		adapterTopFivePopular = TopFivePopularDrinksAdapter{ position ->  onPopularDrinkItemClicked(position)}
 		adapterLatest = LatestDrinksAdapter { position -> onLatestItemClicked(position) }
 		adapterTopTenDrinks = TopTenRandomDrinksAdapter{position -> onRandomDrinksItemClicked(position)}
+
+		binding.textViewMore.setOnClickListener {
+			navController.navigate(R.id.action_homeFragment2_to_createRecipeFragment2)
+		}
 
 		setPopularDrinksRecyclerview()
 		setLatestDrinksRecyclerview()
 		setTopDrinksViewPager()
-		setObservables()
+		subscribeToObservables()
 	}
 
-	private fun setObservables() {
+	private fun subscribeToObservables() {
 		binding.textViewNetworkStatus.visibility = View.GONE
 		mainViewModel.drinks.observe(viewLifecycleOwner, {
 			when(it.status){
 				is Status.SUCCESS -> {
 					it.data?.let { drinks ->
-						adapterPopular.differ.submitList(drinks.drinks.subList(0,5))
+						adapterTopFivePopular.differ.submitList(drinks.drinks.subList(0,5))
 					}
 				}
 				is Status.ERROR -> {
@@ -134,7 +140,7 @@ class HomeFragment : Fragment() {
 		val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
 		binding.recyclerViewPopularDrink.layoutManager = layoutManager
 		binding.recyclerViewPopularDrink.hasFixedSize()
-		binding.recyclerViewPopularDrink.adapter  = adapterPopular
+		binding.recyclerViewPopularDrink.adapter  = adapterTopFivePopular
 	}
 
 	private fun onLatestItemClicked(position: Int){
@@ -146,7 +152,7 @@ class HomeFragment : Fragment() {
 	}
 
 	private fun onPopularDrinkItemClicked(position: Int) {
-		val id  = adapterPopular.differ.currentList[position].idDrink
+		val id  = adapterTopFivePopular.differ.currentList[position].idDrink
 		val bundle = bundleOf("ID" to id)
 		val navController: NavController = binding.root.findNavController()
 		navController.navigate(R.id.action_homeFragment2_to_drinkDetailsFragment,bundle)
@@ -155,7 +161,6 @@ class HomeFragment : Fragment() {
 	private fun onRandomDrinksItemClicked(position: Int) {
 		val id  = adapterTopTenDrinks.differ.currentList[position].idDrink
 		val bundle = bundleOf("ID" to id)
-		val navController: NavController = binding.root.findNavController()
 		navController.navigate(R.id.action_homeFragment2_to_drinkDetailsFragment,bundle)
 	}
 }

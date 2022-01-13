@@ -15,10 +15,13 @@
         <entry key="app/src/main/res/layout/favourite_recipes_item_layout.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/layout/fragment_create_recipe.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/layout/fragment_drink_details.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_popular_drinks.xml" value="0.17731481481481481" />
         <entry key="app/src/main/res/layout/latest_drink_item_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/loading_state_item_layout.xml" value="0.16342592592592592" />
         <entry key="app/src/main/res/layout/popular_drink_item_layout.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/popular_drinks_item_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/top_ten_drink_item_layout.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/menu/bottom_nav_bar_menu.xml" value="0.19074074074074074" />
       </map>

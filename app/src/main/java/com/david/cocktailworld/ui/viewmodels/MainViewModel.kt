@@ -10,13 +10,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.david.cocktailworld.HiltApplication
 import com.david.cocktailworld.data.db.entities.Recipe
 import com.david.cocktailworld.data.repositories.MainRepository
+import com.david.cocktailworld.model.Drink
 import com.david.cocktailworld.model.Drinks
 import com.david.cocktailworld.utils.NetworkHelper
 import com.david.cocktailworld.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -30,6 +35,11 @@ class MainViewModel @Inject constructor(
 	private val networkHelper: NetworkHelper,
 	application: Application
 	): AndroidViewModel(application){
+
+	private var pagedData: Flow<PagingData<Drink>>? = null
+	private val newPagedData: Flow<PagingData<Drink>>
+	get() = pagedData!!
+
 	private val _drinks = MutableLiveData<Resource<Drinks>>()
 	val drinks: LiveData<Resource<Drinks>>
 	get() = _drinks
@@ -58,6 +68,12 @@ class MainViewModel @Inject constructor(
 		fetchRandomTopDrinks()
 		id?.let { fetchDrinkDetails(it) }
 	}
+	@ExperimentalPagingApi
+	fun fetchPagedPopularDrinks(): Flow<PagingData<Drink>> {
+		pagedData = mainRepository.getPagedPopularDrinks().cachedIn(viewModelScope)
+		return newPagedData
+	}
+
 	private fun checkInternet(){
 		viewModelScope.launch {
 			val hasInternet: Boolean? = networkHelper.value

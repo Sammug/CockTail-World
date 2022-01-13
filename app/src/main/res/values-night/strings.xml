@@ -10,4 +10,7 @@
     <string name="ingredients">Ingredients:</string>
     <string name="save_recipe">SAVE RECIPE</string>
     <string name="like_button">Like Button</string>
+    <string name="popular_drinks">Popular drinks</string>
+    <string name="alcoholic_drink">Alcoholic drink</string>
+    <string name="retry">retry</string>
 </resources>

@@ -8,17 +8,21 @@ import androidx.room.TypeConverters
 import com.david.cocktailworld.data.db.converters.RoomTypeConverter
 import com.david.cocktailworld.data.db.dao.DrinksDao
 import com.david.cocktailworld.data.db.dao.FavouriteDrinksDao
+import com.david.cocktailworld.data.db.dao.RemoteKeysDao
 import com.david.cocktailworld.data.db.entities.Recipe
+import com.david.cocktailworld.data.db.entities.RemoteKeys
+import com.david.cocktailworld.model.Drink
 import com.david.cocktailworld.model.Drinks
 
 @Database(
-    entities = [Recipe::class, Drinks::class],
-    version = 3
+    entities = [Recipe::class, Drink::class, RemoteKeys::class],
+    version = 5
 )
 @TypeConverters(RoomTypeConverter::class)
 abstract class DrinksDatabase: RoomDatabase() {
     abstract val favouriteDrinksDao: FavouriteDrinksDao
     abstract val drinksDao: DrinksDao
+    abstract val remoteKeysDao: RemoteKeysDao
 
     companion object{
         @Volatile
