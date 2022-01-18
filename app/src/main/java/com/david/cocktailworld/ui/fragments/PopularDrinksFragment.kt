@@ -55,11 +55,11 @@ class CreateRecipeFragment : Fragment() {
 	}
 	@ExperimentalPagingApi
 	private fun getPagedData(){
-					lifecycleScope.launch {
-						mainViewModel.fetchPagedPopularDrinks().collectLatest {
-							popularDrinksAdapter.submitData(it)
-						}
-					}
+		lifecycleScope.launch {
+			mainViewModel.fetchPagedPopularDrinks().collectLatest {
+				popularDrinksAdapter.submitData(it)
+			}
+		}
 	}
 
 	private fun setUpRecyclerView() {
@@ -102,7 +102,7 @@ class CreateRecipeFragment : Fragment() {
 	}
 
 	private fun onPopularDrinkItemClicked(position: Int) {
-		//val id  = popularDrinksAdapter.differ.currentList[position].idDrink
+
 		val bundle = bundleOf("ID" to id)
 		navController.navigate(R.id.action_createRecipeFragment_to_drinkDetailsFragment,bundle)
 	}

@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DrinkDetailsFragment : Fragment() {
 	private var _binding: FragmentDrinkDetailsBinding? = null
-	val binding: FragmentDrinkDetailsBinding
+	private val binding: FragmentDrinkDetailsBinding
 	get() = _binding!!
 
 	private val mainViewModel: MainViewModel by viewModels()
@@ -41,20 +41,20 @@ class DrinkDetailsFragment : Fragment() {
 
 		drinkId?.let {
 			mainViewModel.fetchDrinkDetails(it)
-			mainViewModel.drink.observe(viewLifecycleOwner, { drinks ->
-				when(drinks.status){
-					is Status.SUCCESS -> {
-						drinks.data?.drinks.let { drink ->
-							drink?.map { _drink ->
-								bindViews(_drink)
-								createRecipe(_drink)
+			mainViewModel.drink.observe(viewLifecycleOwner, { response ->
+				when(response.status){
+					Status.SUCCESS -> {
+						response.data?.drinks.let { drinks ->
+							drinks?.map { drink ->
+								bindViews(drink)
+								createRecipe(drink)
 							}
 						}
 					}
-					is Status.ERROR -> {
+					Status.ERROR -> {
 						Toast.makeText(requireContext(),"Error occured", Toast.LENGTH_LONG).show()
 					}
-					is Status.LOADING -> {
+					Status.LOADING -> {
 						//Toast.makeText(requireContext(),"LOADING..", Toast.LENGTH_LONG).show()
 					}
 				}
@@ -66,37 +66,37 @@ class DrinkDetailsFragment : Fragment() {
 		}
 	}
 
-	private fun createRecipe(_drink: Drink) {
+	private fun createRecipe(drink: Drink) {
 		recipe = Recipe(
-			_drink.idDrink,
-			_drink.strDrink,
-			_drink.strTags,
-			_drink.strCategory,
-			_drink.strAlcoholic,
-			_drink.strGlass,
-			_drink.strInstructions,
-			_drink.strDrinkThumb,
-			_drink.strIngredient1,
-			_drink.strIngredient2,
-			_drink.strIngredient3,
-			_drink.strIngredient4
+			drink.idDrink,
+			drink.strDrink,
+			drink.strTags,
+			drink.strCategory,
+			drink.strAlcoholic,
+			drink.strGlass,
+			drink.strInstructions,
+			drink.strDrinkThumb,
+			drink.strIngredient1,
+			drink.strIngredient2,
+			drink.strIngredient3,
+			drink.strIngredient4
 		)
 	}
 
 	@SuppressLint("SetTextI18n")
-	private fun bindViews(_drink: Drink) {
-			binding.textViewTitle.text = _drink.strDrink
-			binding.textViewTags.text = _drink.strTags
-			binding.textViewCocktailType.text = _drink.strAlcoholic
-			binding.textViewIngredient1.text = "O ${_drink.strIngredient1}"
-			binding.textViewIngredient2.text = "O ${_drink.strIngredient2}"
-			binding.textViewIngredient3.text = "O ${_drink.strIngredient3}"
-			binding.textViewIngredient4.text = "O ${_drink.strIngredient4}"
-			binding.textViewDrinkCategory.text = _drink.strCategory
-			binding.textViewInstructions.text = _drink.strInstructions
+	private fun bindViews(drink: Drink) {
+			binding.textViewTitle.text = drink.strDrink
+			binding.textViewTags.text = drink.strTags
+			binding.textViewCocktailType.text = drink.strAlcoholic
+			binding.textViewIngredient1.text = "O ${drink.strIngredient1}"
+			binding.textViewIngredient2.text = "O ${drink.strIngredient2}"
+			binding.textViewIngredient3.text = "O ${drink.strIngredient3}"
+			binding.textViewIngredient4.text = "O ${drink.strIngredient4}"
+			binding.textViewDrinkCategory.text = drink.strCategory
+			binding.textViewInstructions.text = drink.strInstructions
 
 			Glide.with(binding.root)
-				.load(_drink.strDrinkThumb)
+				.load(drink.strDrinkThumb)
 				.centerCrop()
 				.error(R.drawable.cock_tail_thumbnail)
 				.into(binding.imageViewDescription)

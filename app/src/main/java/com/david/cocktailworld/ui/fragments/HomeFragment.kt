@@ -145,7 +145,7 @@ class HomeFragment : Fragment() {
 	private fun setTopDrinksViewPager() {
 		binding.viewPagerTopTenDrinks.adapter  = adapterTopTenDrinks
 
-		TabLayoutMediator(binding.tabLayout,binding.viewPagerTopTenDrinks){tab,position ->
+		TabLayoutMediator(binding.tabLayout,binding.viewPagerTopTenDrinks){ _, _ ->
 
 		}.attach()
 	}

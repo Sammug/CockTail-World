@@ -24,14 +24,12 @@ import javax.inject.Singleton
 object AppModule {
 	@Provides
 	@Singleton
-	fun provideOkHttpClient(cache: Cache): OkHttpClient{
+	fun provideOkHttpClient(): OkHttpClient{
 		val okHttpClient =  OkHttpClient.Builder()
 		.connectTimeout(30, TimeUnit.SECONDS)
 		.readTimeout(30, TimeUnit.SECONDS)
 		.writeTimeout(30, TimeUnit.SECONDS)
 			.addInterceptor(authInterceptor)
-			.addInterceptor(cacheInterceptor)
-			.cache(cache)
 		if (com.david.cocktailworld.BuildConfig.DEBUG){
 			okHttpClient.addInterceptor(httpLoggingInterceptor)
 		}
@@ -73,27 +71,7 @@ object AppModule {
 			chain.proceed(request)
 		}
 
-		private val cacheInterceptor = Interceptor { chain ->
-			val response: Response = chain.proceed(chain.request())
-			val cacheControl = CacheControl.Builder()
-				.maxAge(30, TimeUnit.DAYS)
-				.build()
-			response.newBuilder()
-				.header("Cache-Control", cacheControl.toString())
-				.build()
-		}
-
-		/*Caching data */
-		@Provides
-		@Singleton
-		fun provideCache(@ApplicationContext appContext: Context): Cache {
-
-			return Cache(
-				File(appContext.applicationContext.cacheDir, "cocktails_cache"),
-				10 * 1024 * 1024
-			)
-		}
-
+	/*http logging interceptor*/
 		private val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
 			level = HttpLoggingInterceptor.Level.BODY
 		}

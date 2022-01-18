@@ -57,7 +57,6 @@ class MainViewModel @Inject constructor(
 		get() = _drink
 
 	private val _onlineStatus = MutableSharedFlow<String>()
-	val onlineStatus = _onlineStatus.asSharedFlow()
 
 	val id: String? = null
 
