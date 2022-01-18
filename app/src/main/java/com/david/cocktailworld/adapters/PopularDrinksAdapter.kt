@@ -5,14 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.david.cocktailworld.R
-import com.david.cocktailworld.model.Drink
+import com.david.cocktailworld.data.local.db.entities.Drink
 
 class PopularDrinksAdapter(private val onItemClick: (position: Int) -> Unit):
 	PagingDataAdapter<Drink,PopularDrinksAdapter.ViewHolder>(DiffCallBack()) {

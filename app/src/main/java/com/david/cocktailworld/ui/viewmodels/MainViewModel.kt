@@ -14,10 +14,10 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.david.cocktailworld.HiltApplication
-import com.david.cocktailworld.data.db.entities.Recipe
+import com.david.cocktailworld.data.local.db.entities.Recipe
 import com.david.cocktailworld.data.repositories.MainRepository
-import com.david.cocktailworld.model.Drink
-import com.david.cocktailworld.model.Drinks
+import com.david.cocktailworld.data.local.db.entities.Drink
+import com.david.cocktailworld.data.remote.Drinks
 import com.david.cocktailworld.utils.NetworkHelper
 import com.david.cocktailworld.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

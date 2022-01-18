@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.david.cocktailworld.R
-import com.david.cocktailworld.data.db.entities.Recipe
+import com.david.cocktailworld.data.local.db.entities.Recipe
 
 class FavouriteDrinksAdapter: RecyclerView.Adapter<FavouriteDrinksAdapter.ViewHolder>() {
 

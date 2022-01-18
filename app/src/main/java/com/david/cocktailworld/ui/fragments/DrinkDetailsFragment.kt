@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.david.cocktailworld.R
-import com.david.cocktailworld.data.db.entities.Recipe
+import com.david.cocktailworld.data.local.db.entities.Recipe
 import com.david.cocktailworld.databinding.FragmentDrinkDetailsBinding
-import com.david.cocktailworld.model.Drink
+import com.david.cocktailworld.data.local.db.entities.Drink
 import com.david.cocktailworld.ui.viewmodels.MainViewModel
 import com.david.cocktailworld.utils.Status
 import dagger.hilt.android.AndroidEntryPoint

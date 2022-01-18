@@ -1,10 +1,9 @@
 package com.david.cocktailworld.di
 
 import android.content.Context
-import com.david.cocktailworld.BuildConfig
 import com.david.cocktailworld.api.ApiService
-import com.david.cocktailworld.data.db.DrinksDatabase
-import com.david.cocktailworld.data.db.dao.FavouriteDrinksDao
+import com.david.cocktailworld.data.local.db.DrinksDatabase
+import com.david.cocktailworld.data.local.db.dao.FavouriteDrinksDao
 import com.david.cocktailworld.utils.API_KEY
 import com.david.cocktailworld.utils.BASE_URL
 import dagger.Module

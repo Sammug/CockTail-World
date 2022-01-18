@@ -1,10 +1,8 @@
 package com.david.cocktailworld.api
 
-import com.david.cocktailworld.model.Drinks
+import com.david.cocktailworld.data.remote.Drinks
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface ApiService {
