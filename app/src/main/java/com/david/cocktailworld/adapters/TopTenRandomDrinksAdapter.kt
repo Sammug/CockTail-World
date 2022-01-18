@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.david.cocktailworld.R
-import com.david.cocktailworld.model.Drink
+import com.david.cocktailworld.data.local.db.entities.Drink
 
 class TopTenRandomDrinksAdapter(
 

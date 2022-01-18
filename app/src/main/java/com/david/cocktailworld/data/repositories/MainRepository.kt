@@ -1,14 +1,12 @@
 package com.david.cocktailworld.data.repositories
 
-import androidx.lifecycle.LiveData
 import androidx.paging.*
 import com.david.cocktailworld.api.ApiService
-import com.david.cocktailworld.data.datasource.PagingDataSource
-import com.david.cocktailworld.data.db.DrinksDatabase
-import com.david.cocktailworld.data.db.entities.Recipe
-import com.david.cocktailworld.data.mediators.PopularDrinksRemoteMediator
-import com.david.cocktailworld.model.Drink
-import com.david.cocktailworld.model.Drinks
+import com.david.cocktailworld.data.paging.PagingDataSource
+import com.david.cocktailworld.data.local.db.DrinksDatabase
+import com.david.cocktailworld.data.local.db.entities.Recipe
+import com.david.cocktailworld.data.paging.PopularDrinksRemoteMediator
+import com.david.cocktailworld.data.local.db.entities.Drink
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
