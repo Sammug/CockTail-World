@@ -68,8 +68,8 @@ class HomeFragment : Fragment() {
 
 	private fun subscribeToObservables() {
 		binding.textViewNetworkStatus.visibility = View.GONE
-		mainViewModel.drinks.observe(viewLifecycleOwner, {
-			when(it.status){
+		mainViewModel.drinks.observe(viewLifecycleOwner) {
+			when (it.status) {
 				is Status.SUCCESS -> {
 					binding.progressBar.isVisible = false
 					binding.textViewPopular.isVisible = true
@@ -77,15 +77,17 @@ class HomeFragment : Fragment() {
 					binding.textViewLatest.isVisible = true
 
 					it.data?.let { drinks ->
-						adapterTopFivePopular.differ.submitList(drinks.drinks.subList(0,5))
+						adapterTopFivePopular.differ.submitList(drinks.drinks.subList(0, 5))
 					}
 				}
+
 				is Status.ERROR -> {
-					it.message?.let {message ->
+					it.message?.let { message ->
 						binding.textViewNetworkStatus.visibility = View.VISIBLE
 						binding.textViewNetworkStatus.text = message
 					}
 				}
+
 				is Status.LOADING -> {
 					binding.progressBar.isVisible = true
 					binding.textViewPopular.isVisible = false
@@ -93,10 +95,10 @@ class HomeFragment : Fragment() {
 					binding.textViewLatest.isVisible = false
 				}
 			}
-		})
+		}
 
-		mainViewModel.latestDrinks.observe(viewLifecycleOwner, {
-			when(it.status){
+		mainViewModel.latestDrinks.observe(viewLifecycleOwner) {
+			when (it.status) {
 				is Status.SUCCESS -> {
 					binding.progressBar.isVisible = false
 					binding.textViewPopular.isVisible = true
@@ -106,12 +108,14 @@ class HomeFragment : Fragment() {
 						adapterLatest.differ.submitList(drinks.drinks)
 					}
 				}
+
 				is Status.ERROR -> {
-					it.message?.let {message ->
+					it.message?.let { message ->
 						binding.textViewNetworkStatus.visibility = View.VISIBLE
 						binding.textViewNetworkStatus.text = message
 					}
 				}
+
 				is Status.LOADING -> {
 					binding.progressBar.isVisible = true
 					binding.textViewMore.isVisible = false
@@ -119,27 +123,29 @@ class HomeFragment : Fragment() {
 					binding.textViewLatest.isVisible = false
 				}
 			}
-		})
+		}
 
-		mainViewModel.topDrinks.observe(viewLifecycleOwner, {
-			when(it.status){
+		mainViewModel.topDrinks.observe(viewLifecycleOwner) {
+			when (it.status) {
 				is Status.SUCCESS -> {
 					binding.progressBar.isVisible = false
 					it.data?.let { drinks ->
 						adapterTopTenDrinks.differ.submitList(drinks.drinks)
 					}
 				}
+
 				is Status.ERROR -> {
-					it.message?.let {message ->
+					it.message?.let { message ->
 						binding.textViewNetworkStatus.visibility = View.VISIBLE
 						binding.textViewNetworkStatus.text = message
 					}
 				}
+
 				is Status.LOADING -> {
 					binding.progressBar.isVisible = true
 				}
 			}
-		})
+		}
 	}
 
 	private fun setTopDrinksViewPager() {

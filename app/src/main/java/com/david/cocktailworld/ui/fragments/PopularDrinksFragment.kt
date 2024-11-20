@@ -102,7 +102,7 @@ class CreateRecipeFragment : Fragment() {
 	}
 
 	private fun onPopularDrinkItemClicked(position: Int) {
-
+		val id = popularDrinksAdapter.snapshot().items[position].idDrink
 		val bundle = bundleOf("ID" to id)
 		navController.navigate(R.id.action_createRecipeFragment_to_drinkDetailsFragment,bundle)
 	}

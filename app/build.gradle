@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.david.cocktailworld"
         minSdk 21
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -36,6 +36,7 @@ android {
     buildFeatures{
         viewBinding true
     }
+    namespace 'com.david.cocktailworld'
 }
 
 dependencies {

@@ -39,9 +39,9 @@ class FavouritesFragment : Fragment() {
 		favouriteDrinksAdapter = FavouriteDrinksAdapter()
 		setUpRecyclerView()
 
-		mainViewModel.getAllFavDrinks().observe(viewLifecycleOwner,{favouriteDrinks ->
-				favouriteDrinksAdapter.differ.submitList(favouriteDrinks)
-		})
+		mainViewModel.getAllFavDrinks().observe(viewLifecycleOwner) { favouriteDrinks ->
+			favouriteDrinksAdapter.differ.submitList(favouriteDrinks)
+		}
 
 		val onItemTouchHelperCallBack  = object : ItemTouchHelper.SimpleCallback(
 			ItemTouchHelper.UP or ItemTouchHelper.DOWN,

@@ -41,8 +41,8 @@ class DrinkDetailsFragment : Fragment() {
 
 		drinkId?.let {
 			mainViewModel.fetchDrinkDetails(it)
-			mainViewModel.drink.observe(viewLifecycleOwner, { response ->
-				when(response.status){
+			mainViewModel.drink.observe(viewLifecycleOwner) { response ->
+				when (response.status) {
 					Status.SUCCESS -> {
 						response.data?.drinks.let { drinks ->
 							drinks?.map { drink ->
@@ -51,14 +51,16 @@ class DrinkDetailsFragment : Fragment() {
 							}
 						}
 					}
+
 					Status.ERROR -> {
-						Toast.makeText(requireContext(),"Error occured", Toast.LENGTH_LONG).show()
+						Toast.makeText(requireContext(), "Error occured", Toast.LENGTH_LONG).show()
 					}
+
 					Status.LOADING -> {
 						//Toast.makeText(requireContext(),"LOADING..", Toast.LENGTH_LONG).show()
 					}
 				}
-			})
+			}
 		}
 
 		binding.fabFavourite.setOnClickListener {
